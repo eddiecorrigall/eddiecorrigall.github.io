@@ -30,7 +30,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: blog
+          name: github-pages
           path: ./blog/.output/public/
           if-no-files-found: error
           retention-days: 1
