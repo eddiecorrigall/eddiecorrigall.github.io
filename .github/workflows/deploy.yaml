@@ -1,10 +1,13 @@
 # References:
-# https://nuxt.com/deploy/github-page
+# https://nuxt.com/deploy/github-pages
 # https://github.com/actions/deploy-pages#usage
 
 name: Deploy to GitHub Pages
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
