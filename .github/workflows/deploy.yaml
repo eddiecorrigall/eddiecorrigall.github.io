@@ -23,6 +23,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
+      - name: Audit dependencies
+        run: npm audit --audit-level info
       - name: Install dependencies
         run: npm install
       - name: Build static website
