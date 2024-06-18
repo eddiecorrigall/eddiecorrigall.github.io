@@ -16,13 +16,17 @@ jobs:
       run:
         working-directory: ./blog
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - run: npm install
-      - run: NUXT_APP_BASE_URL=/eddiecorrigall.github.io/ npx nuxt build --preset github_pages
+      - name: Install Dependencies
+        run: npm install
+      - name: Build Static Website
+        run: NUXT_APP_BASE_URL=/eddiecorrigall.github.io/ npx nuxt build --preset github_pages
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
