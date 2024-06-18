@@ -1,13 +1,18 @@
 # References:
 # https://nuxt.com/deploy/github-pages
 # https://github.com/actions/deploy-pages#usage
+# https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+# https://github.com/actions/starter-workflows/blob/main/pages/nuxtjs.yml
 
 name: Deploy to GitHub Pages
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - master
+    branches: [$default-branch]
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -26,18 +31,18 @@ jobs:
           cache-dependency-path: './blog/package-lock.json'
       - name: Audit dependencies
         run: npm audit --audit-level info
+      - name: Setup pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: nuxt
       - name: Install dependencies
         run: npm install
       - name: Build static website
-        run: NUXT_APP_BASE_URL=/eddiecorrigall.github.io/ npx nuxt build --preset github_pages
+        run: NUXT_APP_BASE_URL=/eddiecorrigall.github.io/ npm run generate
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
-          path: ./blog/.output/public/
-          if-no-files-found: error
-          retention-days: 1
-
+          path: ./dist
 
   deploy:
     needs: build
