@@ -14,8 +14,6 @@ jobs:
     defaults:
       run:
         working-directory: ./blog
-    environment:
-      NUXT_APP_BASE_URL: /eddiecorrigall.github.io
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,7 +22,7 @@ jobs:
           cache: npm
       # Pick your own package manager and build script
       - run: npm install
-      - run: npx nuxt build --preset github_pages
+      - run: NUXT_APP_BASE_URL=/eddiecorrigall.github.io npx nuxt build --preset github_pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
