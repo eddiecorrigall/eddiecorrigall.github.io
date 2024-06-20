@@ -21,3 +21,10 @@ hugo
 ```
 
 The output directory is `public`.
+
+## Resources
+
+- [Content Organization](https://gohugo.io/content-management/organization/#organization-of-content-source)
+- [Section Templates](https://gohugo.io/templates/section-templates/)
+- [Front Matter](https://gohugo.io/content-management/front-matter/)
+- [Images](https://gohugo.io/content-management/image-processing/)

@@ -1,10 +1,20 @@
 baseURL = 'https://eddiecorrigall.github.io/'
 languageCode = 'en-us'
 title = 'Eddie Corrigall'
-theme = "paper"
+theme = 'ananke'
 
 # Number of posts to show on a list page
 paginate = 4
 
 # Number of characters in your card summaries
 summaryLength = 20
+
+# Automatically define a menu entry for each top-level section of your site
+sectionPagesMenu = 'main'
+
+# Define site configuration
+[menus]
+  [[menus.main]]
+    name = 'Home'
+    pageRef = '/'
+    weight = 10
