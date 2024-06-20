@@ -25,6 +25,8 @@ jobs:
         run: sudo apt install hugo
       - name: Debug working directory
         run: pwd
+      - name: Debug working directory files
+        run: ls -laR
       - name: Build static website
         run: hugo --minify
       - name: Upload artifact
