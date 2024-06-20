@@ -1,10 +1,8 @@
 theme = 'PaperMod'
-# theme = 'ananke'
-# theme = 'quint'
 
+title = 'Eddie Corrigall'
 baseURL = 'https://eddiecorrigall.github.io/'
 languageCode = 'en-us'
-title = 'Eddie Corrigall'
 
 # Number of posts to show on a list page
 paginate = 4
@@ -12,8 +10,28 @@ paginate = 4
 # Number of characters in your card summaries
 summaryLength = 20
 
+[params]
+  ShowReadingTime = true
+  # ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+
+  [[params.fuseOpts]]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    limit = 10
+    keys = ["title", "permalink", "summary", "content"]
+
 # Automatically define a menu entry for each top-level section of your site
-# sectionPagesMenu = 'main'
+sectionPagesMenu = 'main'
 
 # Define site configuration
 # Menu example: https://gohugo.io/content-management/menus/#example-site-configuration
@@ -39,6 +57,8 @@ summaryLength = 20
     pageRef = '/posts'
     weight = 40
     pre = '<i>&check; </i>'
+
+  # TODO: these are not rendering
   [[menus.footer]]
     name = 'GitHub'
     url = 'https://github.com/eddiecorrigall'
@@ -50,6 +70,13 @@ summaryLength = 20
     name = 'LinkedIn'
     url = 'https://www.linkedin.com/in/eddiecorrigall'
     weight = 20
+    pre = '<i>TODO </i>'
+    [menus.footer.params]
+      rel = 'external'
+  [[menus.footer]]
+    name = 'Stack Overflow'
+    url = 'https://stackoverflow.com/users/1421875/edward-corrigall'
+    weight = 30
     pre = '<i>TODO </i>'
     [menus.footer.params]
       rel = 'external'
