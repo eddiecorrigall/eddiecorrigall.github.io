@@ -4,7 +4,7 @@
 # https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
 # https://github.com/actions/starter-workflows/blob/main/pages/nuxtjs.yml
 
-name: Deploy to GitHub Pages
+name: 'Nuxt: Deploy to GitHub Pages'
 on:
   push:
     branches: [master]
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./blog
+        working-directory: ./nuxt
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: './blog/package-lock.json'
+          cache-dependency-path: './nuxt/package-lock.json'
       - name: Audit dependencies
         run: npm audit --audit-level info
       - name: Install dependencies
@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-         path: ./blog/.output/public
+         path: ./nuxt/.output/public
 
   deploy:
     needs: build

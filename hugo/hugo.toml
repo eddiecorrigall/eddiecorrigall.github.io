@@ -1,0 +1,4 @@
+baseURL = 'https://eddiecorrigall.github.io/'
+languageCode = 'en-us'
+title = 'Eddie Corrigall'
+theme = 'ananke'
