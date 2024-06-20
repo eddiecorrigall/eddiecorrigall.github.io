@@ -21,9 +21,7 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-        with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -31,8 +29,10 @@ jobs:
           # https://gohugo.io/installation/linux/#editions
           # WebP format for image compression and Sass to CSS
           extended: true
+
       - name: Build static website
         run: hugo --minify
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
