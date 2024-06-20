@@ -27,13 +27,12 @@ jobs:
       - name: Debug go version
         run: go version
       - name: Install Hugo
-        # https://gohugo.io/installation/linux/#prebuilt-binaries
-        # run: sudo apt install hugo
-        run: |
-          mkdir -p /tmp/hugo
-          cd /tmp/hugo
-          curl -O https://github.com/gohugoio/hugo/releases/download/v0.127.0/hugo_0.127.0_linux-amd64.deb
-          sudo dpkg -i hugo_0.127.0_linux-amd64.deb
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.127.0'
+          # https://gohugo.io/installation/linux/#editions
+          # WebP format for image compression and Sass to CSS
+          extended: true
       - name: Debug working directory
         run: pwd
       - name: Debug working directory files
