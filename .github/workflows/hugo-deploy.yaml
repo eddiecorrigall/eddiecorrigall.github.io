@@ -21,11 +21,6 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '^1.13.1'
-      - name: Debug go version
-        run: go version
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -33,12 +28,6 @@ jobs:
           # https://gohugo.io/installation/linux/#editions
           # WebP format for image compression and Sass to CSS
           extended: true
-      - name: Debug working directory
-        run: pwd
-      - name: Debug working directory files
-        run: ls -laR
-      - name: Debug hugo version
-        run: hugo version
       - name: Build static website
         run: hugo --minify
       - name: Upload artifact
