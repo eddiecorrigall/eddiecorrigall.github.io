@@ -27,6 +27,8 @@ jobs:
         run: pwd
       - name: Debug working directory files
         run: ls -laR
+      - name: Debug hugo version
+        run: hugo version
       - name: Build static website
         run: hugo --minify
       - name: Upload artifact
