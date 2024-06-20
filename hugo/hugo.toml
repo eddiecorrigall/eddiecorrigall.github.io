@@ -1,7 +1,10 @@
+theme = 'PaperMod'
+# theme = 'ananke'
+# theme = 'quint'
+
 baseURL = 'https://eddiecorrigall.github.io/'
 languageCode = 'en-us'
 title = 'Eddie Corrigall'
-theme = 'ananke'
 
 # Number of posts to show on a list page
 paginate = 4
@@ -10,11 +13,43 @@ paginate = 4
 summaryLength = 20
 
 # Automatically define a menu entry for each top-level section of your site
-sectionPagesMenu = 'main'
+# sectionPagesMenu = 'main'
 
 # Define site configuration
+# Menu example: https://gohugo.io/content-management/menus/#example-site-configuration
+# HTML codes: https://www.toptal.com/designers/htmlarrows/
 [menus]
   [[menus.main]]
     name = 'Home'
     pageRef = '/'
     weight = 10
+    pre = '<i>&#9825; </i>'
+  [[menus.main]]
+    name = 'Contact'
+    pageRef = '/contact'
+    weight = 20
+    pre = '<i>&commat; </i>'
+  [[menus.main]]
+    name = 'About'
+    pageRef = '/about'
+    weight = 30
+    pre = '<i>&quest; </i>'
+  [[menus.main]]
+    name = 'Posts'
+    pageRef = '/posts'
+    weight = 40
+    pre = '<i>&check; </i>'
+  [[menus.footer]]
+    name = 'GitHub'
+    url = 'https://github.com/eddiecorrigall'
+    weight = 10
+    pre = '<i>TODO </i>'
+    [menus.footer.params]
+      rel = 'external'
+  [[menus.footer]]
+    name = 'LinkedIn'
+    url = 'https://www.linkedin.com/in/eddiecorrigall'
+    weight = 20
+    pre = '<i>TODO </i>'
+    [menus.footer.params]
+      rel = 'external'
