@@ -15,16 +15,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./hugo
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
       - name: Setup Hugo
         run: sudo apt install hugo
       - name: Build static website
-        run: hugo --minify
+        run: cd ./hugo; hugo --minify
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
