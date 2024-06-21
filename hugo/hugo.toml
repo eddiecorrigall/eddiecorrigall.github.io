@@ -38,16 +38,20 @@ summaryLength = 20
 
   [[params.socialIcons]]
     name = 'github'
-    title = 'GitHub Profile'
+    title = 'My GitHub Profile'
     url = 'https://github.com/eddiecorrigall'
   [[params.socialIcons]]
     name = 'linkedin'
-    title = 'LinkedIn Profile'
+    title = 'My LinkedIn Profile'
     url = 'https://www.linkedin.com/in/eddiecorrigall/'
   [[params.socialIcons]]
     name = 'stackoverflow'
-    title = 'Stack Overflow Profile'
+    title = 'My Stack Overflow Profile'
     url = 'https://stackoverflow.com/users/1421875/edward-corrigall'
+  [[params.socialIcons]]
+    name = 'cv'
+    title = 'My Resume'
+    url = 'https://github.com/eddiecorrigall/resume'
 
 [params.fuseOpts]
   # https://fusejs.io/api/options.html
