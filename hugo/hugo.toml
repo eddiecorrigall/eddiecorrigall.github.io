@@ -23,14 +23,18 @@ summaryLength = 20
 [params]
   env = 'production'
 
-  ShowReadingTime = true
+  # ShowReadingTime = true
   # ShowShareButtons = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
-  ShowWordCount = true
+  # ShowWordCount = true
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
+
+  [params.homeInfoParams]
+    Title = "Hi there 👋"
+    Content = 'Welcome to my personal website.'
 
   [[params.socialIcons]]
     name = 'github'
@@ -40,6 +44,10 @@ summaryLength = 20
     name = 'linkedin'
     title = 'LinkedIn Profile'
     url = 'https://www.linkedin.com/in/eddiecorrigall/'
+  [[params.socialIcons]]
+    name = 'stackoverflow'
+    title = 'Stack Overflow Profile'
+    url = 'https://stackoverflow.com/users/1421875/edward-corrigall'
 
 [params.fuseOpts]
   # https://fusejs.io/api/options.html
@@ -85,26 +93,3 @@ summaryLength = 20
     pageRef = '/search'
     weight = 50
     pre = '<i>🔍 </i>'
-
-  # TODO: these are not rendering
-  [[menus.footer]]
-    name = 'GitHub'
-    url = 'https://github.com/eddiecorrigall'
-    weight = 10
-    pre = '<i>TODO </i>'
-    [menus.footer.params]
-      rel = 'external'
-  [[menus.footer]]
-    name = 'LinkedIn'
-    url = 'https://www.linkedin.com/in/eddiecorrigall'
-    weight = 20
-    pre = '<i>TODO </i>'
-    [menus.footer.params]
-      rel = 'external'
-  [[menus.footer]]
-    name = 'Stack Overflow'
-    url = 'https://stackoverflow.com/users/1421875/edward-corrigall'
-    weight = 30
-    pre = '<i>TODO </i>'
-    [menus.footer.params]
-      rel = 'external'

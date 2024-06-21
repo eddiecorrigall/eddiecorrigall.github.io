@@ -2,7 +2,9 @@
 title = 'About'
 +++
 
-Hi, I'm Eddie - a canadian software developer living in Kitchener, Ontario.
+Hi, I'm Eddie,
+
+A Canadian 🇨🇦 software developer living in [Kitchener, Ontario](https://maps.app.goo.gl/94Z5CbSJW5tLtwQK9).
 
 I am interest in a great number of topics, and I like to learn and share.
 
