@@ -1,8 +1,11 @@
 theme = 'PaperMod'
 
 title = 'Eddie Corrigall'
+copyright = '&copy; 2024 [Eddie Corrigall](https://www.linkedin.com/in/eddiecorrigall/)'
 baseURL = 'https://eddiecorrigall.github.io/'
 languageCode = 'en-us'
+enableRobotsTXT = true
+enableEmoji = false
 
 # Number of posts to show on a list page
 paginate = 4
@@ -13,6 +16,9 @@ summaryLength = 20
 [outputs]
   # JSON generates `/index.js` used for search
   home = ['HTML', 'RSS', 'JSON']
+
+[security]
+  enableInlineShortcodes = false
 
 [params]
   env = 'production'
@@ -26,6 +32,14 @@ summaryLength = 20
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
 
+  [[params.socialIcons]]
+    name = 'github'
+    title = 'GitHub Profile'
+    url = 'https://github.com/eddiecorrigall'
+  [[params.socialIcons]]
+    name = 'linkedin'
+    title = 'LinkedIn Profile'
+    url = 'https://www.linkedin.com/in/eddiecorrigall/'
 
 [params.fuseOpts]
   # https://fusejs.io/api/options.html
@@ -39,7 +53,8 @@ summaryLength = 20
   keys = ["title", "permalink", "summary", "content"]
 
 # Automatically define a menu entry for each top-level section of your site
-sectionPagesMenu = 'main'
+# Any content markdown with a menu set to main will appear at the top
+# sectionPagesMenu = 'main'
 
 # Define site configuration
 # Menu example: https://gohugo.io/content-management/menus/#example-site-configuration
@@ -69,7 +84,7 @@ sectionPagesMenu = 'main'
     name = 'Search'
     pageRef = '/search'
     weight = 50
-    pre = '<i>🔍 Search</i>'
+    pre = '<i>🔍 </i>'
 
   # TODO: these are not rendering
   [[menus.footer]]
