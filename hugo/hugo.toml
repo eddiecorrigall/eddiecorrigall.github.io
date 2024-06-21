@@ -24,15 +24,17 @@ summaryLength = 20
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
 
-  [[params.fuseOpts]]
-    isCaseSensitive = false
-    shouldSort = true
-    location = 0
-    distance = 1000
-    threshold = 0.4
-    minMatchCharLength = 0
-    limit = 10
-    keys = ["title", "permalink", "summary", "content"]
+
+[params.fuseOpts]
+  # https://fusejs.io/api/options.html
+  isCaseSensitive = false
+  shouldSort = true
+  location = 0
+  distance = 1000
+  threshold = 0.4
+  minMatchCharLength = 0
+  limit = 10
+  keys = ["title", "permalink", "summary", "content"]
 
 # Automatically define a menu entry for each top-level section of your site
 sectionPagesMenu = 'main'
