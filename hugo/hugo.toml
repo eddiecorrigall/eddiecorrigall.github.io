@@ -10,6 +10,10 @@ paginate = 4
 # Number of characters in your card summaries
 summaryLength = 20
 
+[outputs]
+  # JSON generates `/index.js` used for search
+  home = ['HTML', 'RSS', 'JSON']
+
 [params]
   ShowReadingTime = true
   # ShowShareButtons = true
@@ -57,6 +61,11 @@ sectionPagesMenu = 'main'
     pageRef = '/posts'
     weight = 40
     pre = '<i>&check; </i>'
+  [[menus.main]]
+    name = 'Search'
+    pageRef = '/search'
+    weight = 50
+    pre = '<i>🔍 Search</i>'
 
   # TODO: these are not rendering
   [[menus.footer]]
