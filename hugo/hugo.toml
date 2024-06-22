@@ -64,6 +64,11 @@ summaryLength = 20
   limit = 10
   keys = ["title", "permalink", "summary", "content"]
 
+[params.editPost]
+  URL = 'https://github.com/eddiecorrigall/eddiecorrigall.github.io/edit/master/hugo/content'
+  Text = 'edit post'
+  appendFilePath = true
+
 # Automatically define a menu entry for each top-level section of your site
 # Any content markdown with a menu set to main will appear at the top
 # sectionPagesMenu = 'main'
