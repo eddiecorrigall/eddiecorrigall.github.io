@@ -1,5 +1,5 @@
 +++
-title = 'How I Passed My Aws Exam'
+title = 'How I Passed My AWS Exam'
 date = 2019-12-04T16:04:00-04:00
 draft = false
 
