@@ -11,9 +11,9 @@ ShowToc = true
 TocOpen = true
 
 [cover]
-image = '/posts/shed/alex-shed.jpg'
-alt = 'Alex and shed'
-caption = 'July 28, 2024: Alex posing in front of his new shed'
+image = '/posts/shed/cover.jpg'
+alt = 'Shed cover image'
+caption = ''
 relative = false
 +++
 
@@ -71,3 +71,9 @@ If the underlayment has a grid, align it with the roof. Otherwise, mark the roof
 ### Centre align shingles between roof hips
 
 Before stapling / fastening your first row, determine the number of shingles are needed for the row by dividing the width of the roof by the width of the single. Most likely it will not divide evenly. Determine the offset from the hip by calculating the remainder, and dividing in half. This will ensure an even and consistent look of your roof.
+
+## All Done
+
+July 28, 2024: Alex posing in front of his new [Heartland Stratford 12ft x 8ft Wood Shed](https://www.rona.ca/en/product/heartland-stratford-12-ft-x-8-ft-wood-shed-with-workshop-and-window-182938-30735450)
+
+![July 28, 2024: Alex posing in front of his new shed](./alex-shed.jpg)
