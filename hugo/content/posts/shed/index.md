@@ -9,6 +9,12 @@ ShowWordCount = true
 UseHugoToc = true
 ShowToc = true
 TocOpen = true
+
+[cover]
+image = '/posts/shed/alex-shed.jpg'
+alt = 'Alex and shed'
+caption = 'July 28, 2024: Alex posing in front of his new shed'
+relative = false
 +++
 
 My friend Alex is moving out of Waterloo. He bought a house, but had already started building a shed this summer with a concrete pour. We talked about moving his gazebo and bbq onto the new concrete pad, but it made more sense to build a shed.
@@ -24,7 +30,7 @@ I loaded up my car with tools: circular saw, jigsaw, drill driver, hammer and me
 
 ![Roof Installation](./roof-installation.jpg)
 
-Using a ladder we lined up sheathing with the rafters, and screwed the boards down. Everything was going well except one corner, which wasn't square. It can be tricky to find out where the shape was lost, so you have to play detective.
+Up on a ladder we lined up sheathing with the rafters, and screwed the boards down. Everything was going well except one corner, which wasn't square. It can be tricky to find out where the shape was lost, so you have to play detective.
 
 1. Check the square of the base plate
 1. Check the square of the top plate
@@ -50,7 +56,7 @@ If sides `b` and `c` are perpendicular (make a right-angle), then `a` is the [hy
 
 It doesn't take much to lose its shape. Building materials, measurement, cutting and placement all accumulate errors during a project. Our roof was off by roughly an inch, which isn't too bad. This was apparent because the rectangular sheathing overhung at the side of the building. Make sure you try your best to square the building before screwing down sheathing and check if its plumb as you make progress.
 
-Some of the screws had to be backed-off. We forced the square of the rafters and walls as close as we could with the sheathing, then secure the boards. There was a little access (about a quarter of an inch) which got trimmed with a circular saw. Then we started rolling out underlayment felt and began nailing shingles.
+Some of the screws had to be backed-off. We forced the square of the rafters and walls as close as we could with the sheathing, then secured the boards. There was a little access (about a quarter of an inch) which got trimmed with a circular saw. Then we started rolling out underlayment felt and began nailing shingles.
 
 ## Tips for Installing Shingles
 
@@ -65,7 +71,3 @@ If the underlayment has a grid, align it with the roof. Otherwise, mark the roof
 ### Centre align shingles between roof hips
 
 Before stapling / fastening your first row, determine the number of shingles are needed for the row by dividing the width of the roof by the width of the single. Most likely it will not divide evenly. Determine the offset from the hip by calculating the remainder, and dividing in half. This will ensure an even and consistent look of your roof.
-
-## Result
-
-TODO Picture
