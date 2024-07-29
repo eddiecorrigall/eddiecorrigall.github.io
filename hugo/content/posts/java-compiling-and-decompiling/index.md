@@ -10,6 +10,12 @@ ShowWordCount = true
 UseHugoToc = true
 ShowToc = true
 TocOpen = true
+
+[cover]
+image = '/posts/java-compiling-and-decompiling/cover.png'
+alt = 'Java comping and decompiling cover image'
+caption = ''
+relative = false
 +++
 
 Java is both a compiled and an interpreted language. The [Java Virtual Machine (JVM)](https://en.wikipedia.org/wiki/Java_virtual_machine) is an intermediary between a high-level language such as Java, Scala, or Kotlin, and the host machine. When a Java program is compiled, it is translated into [Java bytecode](https://en.wikipedia.org/wiki/Java_bytecode) which can then be interpreted by the JVM. Hence the duality.
