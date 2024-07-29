@@ -9,6 +9,12 @@ ShowWordCount = true
 UseHugoToc = true
 ShowToc = true
 TocOpen = true
+
+[cover]
+image = '/posts/how-i-passed-my-aws-exam/cover.png'
+alt = 'How I passed my AWS exam cover image'
+caption = ''
+relative = false
 +++
 
 I passed my exam, you can too.
