@@ -1,6 +1,7 @@
 +++
 title = 'HTTP Sessions'
 date = 2018-12-08T16:09:59-04:00
+tags = ['http', 'session', 'cookie', 'state']
 draft = false
 
 ShowReadingTime = true

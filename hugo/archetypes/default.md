@@ -1,6 +1,7 @@
 +++
 title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 date = {{ .Date }}
+tags = ["tag-one", "tag-two"]
 draft = false
 
 ShowReadingTime = true

@@ -2,7 +2,7 @@
 title = 'Java: Compiling and Decompiling'
 date = 2024-06-20T15:16:00-04:00
 draft = false
-tags = ["java", "compilers"]
+tags = ['java', 'compiler', 'compile', 'bytecode']
 
 ShowReadingTime = true
 ShowWordCount = true

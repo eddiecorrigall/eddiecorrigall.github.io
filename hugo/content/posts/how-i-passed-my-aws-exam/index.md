@@ -1,6 +1,7 @@
 +++
 title = 'How I Passed My AWS Exam'
 date = 2019-12-04T16:04:00-04:00
+tags = ['aws', 'certified', 'exam', 'developer', 'associate', 'DVA-C02']
 draft = false
 
 ShowReadingTime = true

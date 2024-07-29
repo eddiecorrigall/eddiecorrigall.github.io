@@ -1,6 +1,7 @@
 +++
 title = 'Shed Build 2024'
 date = 2024-07-29T07:46:24-04:00
+tags = ['shed', 'roof', 'shingle', 'square']
 draft = false
 
 ShowReadingTime = true
