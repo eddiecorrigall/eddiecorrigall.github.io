@@ -29,6 +29,8 @@ locals {
   }
 }
 
+# Create Lambda Function
+
 data "aws_iam_policy_document" "lambda_exec_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -45,7 +47,7 @@ resource "aws_iam_role" "lambda_exec_role" {
   assume_role_policy = data.aws_iam_policy_document.lambda_exec_policy.json
 }
 
-data "archive_file" "lambda" {
+data "archive_file" "lambda_chatbot_artifact" {
   type        = "zip"
   source_dir  = "${path.module}/../chatbot"
   output_path = "${path.module}/artifacts/lambda_function_payload.zip"
@@ -56,7 +58,7 @@ data "archive_file" "lambda" {
 
 resource "aws_lambda_function" "lambda_chatbot" {
   function_name = "WebsiteChatbot"
-  filename      = "${path.module}/artifacts/lambda_function_payload.zip"
+  filename      = archive_file.lambda_chatbot_artifact.output_path
 
   handler       = "lambda.handler"
   runtime       = "python3.9"
@@ -68,4 +70,11 @@ resource "aws_lambda_function" "lambda_chatbot" {
       foo = "bar"
     }
   }
+}
+
+# Create public URL
+
+resource "aws_lambda_function_url" "lambda_chatbot_url" {
+  function_name      = aws_lambda_function.lambda_chatbot.function_name
+  authorization_type = "NONE"
 }
