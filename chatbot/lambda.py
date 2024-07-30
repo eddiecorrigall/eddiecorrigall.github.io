@@ -9,7 +9,7 @@ def get_chatbot_response(request):
     conversation = [
         {
             'role': 'system',
-            'content': 'You are a helpful assistant.'
+            'content': [{'text': 'You are a helpful assistant.'}]
         },
         {
             'role': 'user',
