@@ -36,9 +36,9 @@ def lambda_handler(event, context):
         response = get_chatbot_response(request)
     except Exception as e:
         return {
-            errorType: 'InternalServerError',
-            requestId: context.awsRequestId,
-            stackTrace: traceback.format_exc()
+            'errorType': 'InternalServerError',
+            'requestId': context.awsRequestId,
+            'stackTrace': traceback.format_exc()
         }
     return {
         'statusCode' : 200,
