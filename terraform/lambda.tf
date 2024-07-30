@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "lambda_exec_policy" {
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
-  name = "lambda_chatbot_role"
+  name = "WebsiteLambdaRole"
   assume_role_policy = data.aws_iam_policy_document.lambda_exec_policy.json
 }
 
@@ -55,7 +55,7 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_lambda_function" "lambda_chatbot" {
-  function_name = "ChatBotFunction"
+  function_name = "WebsiteChatbot"
   filename      = "${path.module}/artifact/lambda_function_payload.zip"
 
   handler       = "lambda.handler"
