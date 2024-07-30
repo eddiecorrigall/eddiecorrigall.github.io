@@ -1,0 +1,39 @@
+name: Terraform Deploy
+
+on: [push]
+
+permissions:
+  contents: read  # checkout
+  id-token: write  # configure-aws-credentials
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      AWS_DEFAULT_REGION: ${{ vars.DEPLOY_AWS_REGION }}
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.DEPLOY_AWS_ROLE_ARN }}
+          role-session-name: GitHub_to_AWS_via_FederatedOpenIdConnect
+          aws-region: ${{ vars.DEPLOY_AWS_REGION }}
+
+      - name: Get AWS STS GetCallerIdentity
+        run: aws sts get-caller-identity
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Install Terraform Dependencies
+        run: |
+          cd terraform
+          terraform init
+
+      - name: Deploy to AWS
+        env:
+          TF_VAR_aws_region: ${{ vars.DEPLOY_AWS_REGION }}
+        run: |
+          cd terraform
+          terraform apply -auto-approve
