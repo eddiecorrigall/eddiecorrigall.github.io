@@ -1,10 +1,8 @@
 import boto3
 import traceback
 
-from botocore.exceptions import ClientError
 
-
-bedrock_client = boto3.client('bedrock-runtime', region_name='ca-central-1')
+bedrock = boto3.client(service_name='bedrock-runtime')
 
 def get_chatbot_response(request):
     # https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock/
@@ -18,7 +16,7 @@ def get_chatbot_response(request):
             'content': [{'text': request}],
         }
     ]
-    response = bedrock_client.converse(
+    response = bedrock.converse(
         modelId='meta.llama3-1-405b-instruct-v1:0',
         messages=conversation,
         inferenceConfig={"maxTokens": 512, "temperature": 0.5, "topP": 0.9},
