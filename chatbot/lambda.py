@@ -1,4 +1,5 @@
 import boto3
+import traceback
 
 from botocore.exceptions import ClientError
 
@@ -33,10 +34,11 @@ def lambda_handler(event, context):
     request = "Describe the purpose of a 'hello world' program in one line."
     try:
         response = get_chatbot_response(request)
-    except (ClientError, Exception) as e:
+    except Exception as e:
         return {
-            'statusCode': 500,
-            'body': e
+            errorType: 'InternalServerError',
+            requestId: context.awsRequestId,
+            stackTrace: traceback.format_exc()
         }
     return {
         'statusCode' : 200,
