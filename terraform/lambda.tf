@@ -17,7 +17,7 @@ terraform {
   backend "s3" {
     bucket = "terraform-state-eddiecorrigall"
     key    = "eddiecorrigall.github.io.tfstate"
-    region = "ca-central-1"
+    region = "us-west-2"
   }
 
   required_version = ">= 1.2.0"
