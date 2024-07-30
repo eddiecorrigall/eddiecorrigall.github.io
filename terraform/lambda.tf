@@ -62,7 +62,7 @@ resource "aws_lambda_function" "lambda_chatbot" {
   filename         = data.archive_file.lambda_chatbot_artifact.output_path
   source_code_hash = data.archive_file.lambda_chatbot_artifact.output_base64sha256
 
-  handler       = "lambda.handler"
+  handler       = "lambda.lambda_handler"
   runtime       = "python3.9"
 
   role = aws_iam_role.lambda_exec_role.arn
