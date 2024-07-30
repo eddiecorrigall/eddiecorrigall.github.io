@@ -59,7 +59,7 @@ resource "aws_lambda_function" "lambda_chatbot" {
   filename      = "${path.module}/artifacts/lambda_function_payload.zip"
 
   handler       = "lambda.handler"
-  runtime       = "python3.6"
+  runtime       = "python3.9"
 
   role = aws_iam_role.lambda_exec_role.arn
 
