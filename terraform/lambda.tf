@@ -47,6 +47,11 @@ resource "aws_iam_role" "lambda_exec_role" {
   assume_role_policy = data.aws_iam_policy_document.lambda_exec_policy.json
 }
 
+resource "aws_iam_role_policy_attachment" "basic" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.lambda_exec_role.name
+}
+
 data "archive_file" "lambda_chatbot_artifact" {
   type        = "zip"
   source_dir  = "${path.module}/../chatbot"
