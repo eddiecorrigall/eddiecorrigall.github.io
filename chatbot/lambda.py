@@ -30,6 +30,7 @@ def lambda_handler(event, context):
         'https://eddiecorrigall.github.io'
     ]
     request = "Describe the purpose of a 'hello world' program in one line."
+    response = ''
     try:
         response = get_chatbot_response(request)
     except Exception as e:
@@ -45,5 +46,5 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*', # ', '.join(allow_origins)
             'X-BOTO3-VERSION': boto3.__version__
         },
-        'body': 'Hello World'
+        'body': response
     }

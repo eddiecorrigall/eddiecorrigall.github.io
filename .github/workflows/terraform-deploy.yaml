@@ -1,4 +1,4 @@
-name: Terraform Deploy
+name: 'Terraform: Deploy API to AWS'
 
 on: [push]
 
@@ -23,6 +23,11 @@ jobs:
 
       - name: Get AWS STS GetCallerIdentity
         run: aws sts get-caller-identity
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

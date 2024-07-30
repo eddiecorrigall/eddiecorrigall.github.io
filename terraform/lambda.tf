@@ -52,6 +52,19 @@ resource "aws_iam_role_policy_attachment" "basic" {
   role       = aws_iam_role.lambda_exec_role.name
 }
 
+resource "null_resource" "lambda_requirements" {
+  triggers = {
+    requirements = filesha1("${path.module}/../chatbot/requirements.txt")
+  }
+  # the command to install python and dependencies to the machine and zips
+  provisioner "local-exec" {
+    command = <<EOT
+      cd ${path.module}/../chatbot/
+      pip3 install -r ${path.module}/../chatbot/requirements.txt -t .
+    EOT
+  }
+}
+
 data "archive_file" "lambda_chatbot_artifact" {
   type        = "zip"
   source_dir  = "${path.module}/../chatbot"
@@ -59,6 +72,8 @@ data "archive_file" "lambda_chatbot_artifact" {
   excludes    = [
     "venv"
   ]
+
+  depends_on = [null_resource.lambda_requirements]
 }
 
 resource "aws_lambda_function" "lambda_chatbot" {
