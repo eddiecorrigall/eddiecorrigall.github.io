@@ -37,11 +37,11 @@ def lambda_handler(event, context):
     except Exception as e:
         return {
             'errorType': 'InternalServerError',
-            'requestId': context.awsRequestId,
+            'requestId': context.aws_request_id,
             'stackTrace': traceback.format_exc()
         }
     return {
-        'statusCode' : 200,
+        'statusCode': 200,
         'headers': {
             'Content-Type': 'plain/text',
             'Access-Control-Allow-Origin': '*' # ', '.join(allow_origins)
