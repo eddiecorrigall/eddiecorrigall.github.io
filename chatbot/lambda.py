@@ -43,6 +43,7 @@ def lambda_handler(event, context):
         'headers': {
             'Content-Type': 'plain/text',
             'Access-Control-Allow-Origin': '*' # ', '.join(allow_origins)
+            'X-BOTO3-VERSION': boto3.__version__
         },
         'body': 'Hello World'
     }
