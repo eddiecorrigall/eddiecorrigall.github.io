@@ -56,7 +56,7 @@ data "archive_file" "lambda" {
 
 resource "aws_lambda_function" "lambda_chatbot" {
   function_name = "WebsiteChatbot"
-  filename      = "${path.module}/artifact/lambda_function_payload.zip"
+  filename      = "${path.module}/artifacts/lambda_function_payload.zip"
 
   handler       = "lambda.handler"
   runtime       = "python3.6"
