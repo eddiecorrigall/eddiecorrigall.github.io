@@ -58,7 +58,7 @@ data "archive_file" "lambda_chatbot_artifact" {
 
 resource "aws_lambda_function" "lambda_chatbot" {
   function_name = "WebsiteChatbot"
-  filename      = archive_file.lambda_chatbot_artifact.output_path
+  filename      = data.archive_file.lambda_chatbot_artifact.output_path
 
   handler       = "lambda.handler"
   runtime       = "python3.9"
