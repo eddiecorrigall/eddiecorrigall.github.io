@@ -8,7 +8,7 @@ def get_chatbot_response(request):
     # https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock/
     conversation = [
         {
-            'role': 'system',
+            'role': 'assistant',
             'content': [{'text': 'You are a helpful assistant.'}]
         },
         {
