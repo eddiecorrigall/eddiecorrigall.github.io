@@ -3,8 +3,7 @@ variable "aws_region" {
 }
 
 provider "aws" {
-  # Default region
-  region = "us-west-2"
+  region = "${var.aws_region}"
 }
 
 terraform {
@@ -18,7 +17,7 @@ terraform {
   backend "s3" {
     bucket = "terraform-state-eddiecorrigall"
     key    = "eddiecorrigall.github.io.tfstate"
-    region = "${var.aws_region}"
+    region = "ca-central-1"
   }
 
   required_version = ">= 1.2.0"
