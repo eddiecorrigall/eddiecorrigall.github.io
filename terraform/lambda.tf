@@ -53,11 +53,11 @@ resource "aws_iam_role_policy_attachment" "basic" {
 }
 
 resource "null_resource" "lambda_requirements" {
+  # https://docs.aws.amazon.com/lambda/latest/dg/python-package.html#python-package-dependencies
   triggers = {
     # requirements = filesha1("${path.module}/../chatbot/requirements.txt")
     always = "${timestamp()}"
   }
-  # the command to install python and dependencies to the machine and zips
   provisioner "local-exec" {
     command = <<EOT
       cd ${path.module}/../chatbot/
