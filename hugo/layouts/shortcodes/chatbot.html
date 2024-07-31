@@ -1,1 +1,39 @@
 API: {{ .Get "api" }}
+
+Ask a question:
+<input type="text" id="chatbot_prompt" autocomplete="off" />
+
+<br />
+
+Get a response:
+<p id="chatbot_response"></p>
+
+<script>
+    const prompt = document.getElementById("chatbot_prompt");
+    let timeoutId;
+
+    const handleResponse = (response) => {
+        console.log('handleResponse', response);
+    }
+
+    const submitPromptDelay = 1000; // milliseconds
+    const submitPrompt = (prompt) => {
+        console.log('submitPrompt', prompt);
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                handleResponse(xmlHttp.responseText);
+            }
+        }
+        xmlHttp.open('POST', 'https://bayyyopgdhx7r4dgukwdshxxem0bejgs.lambda-url.ca-central-1.on.aws/', true);
+        xmlHttp.send(prompt);
+    };
+
+    prompt.addEventListener('keyup', (event) => {
+        if (timeoutId !== undefined) {
+            clearTimeout(timeoutId);
+        }
+        const prompt = event.target.value;
+        timeoutId = setTimeout(submitPrompt, submitPromptDelay, prompt);
+    });
+</script>

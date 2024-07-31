@@ -27,15 +27,21 @@ def get_chatbot_response(messages):
         messages=conversation,
         inferenceConfig={'maxTokens': 512, 'temperature': 0.5, 'topP': 0.9},
     )
-    response_text = response["output"]["message"]["content"][0]["text"]
+    response_text = response['output']['message']['content'][0]['text']
     return response_text
 
 def lambda_handler(event, context):
+    if event['httpMethod'] != 'POST':
+        return {
+            'errorType': 'BadRequest',
+            'requestId': context.aws_request_id
+        }
     allow_origins = [
         'http://localhost:1313',
         'https://eddiecorrigall.github.io'
     ]
-    request = event['queryStringParameters']['request']
+    # request = event['queryStringParameters']['request']
+    request = event['body']
     messages = [
         request or 'Create a list of 3 pop songs.'
     ]
@@ -46,7 +52,7 @@ def lambda_handler(event, context):
         return {
             'errorType': 'InternalServerError',
             'requestId': context.aws_request_id,
-            'stackTrace': traceback.format_exc()
+            # 'stackTrace': traceback.format_exc()
         }
     return {
         'statusCode': 200,
