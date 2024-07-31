@@ -1,4 +1,5 @@
 import boto3
+import json
 import traceback
 
 
@@ -34,8 +35,9 @@ def lambda_handler(event, context):
         'http://localhost:1313',
         'https://eddiecorrigall.github.io'
     ]
+    request = event['queryStringParameters']['request']
     messages = [
-        'Create a list of 3 pop songs.'
+        request or 'Create a list of 3 pop songs.'
     ]
     response = ''
     try:
@@ -49,9 +51,11 @@ def lambda_handler(event, context):
     return {
         'statusCode': 200,
         'headers': {
-            'Content-Type': 'plain/text',
+            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*', # ', '.join(allow_origins)
             'X-BOTO3-VERSION': boto3.__version__
         },
-        'body': response
+        'body': json.dumps({
+            'response': response
+        })
     }
