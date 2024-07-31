@@ -31,6 +31,8 @@ def get_chatbot_response(messages):
     return response_text
 
 def lambda_handler(event, context):
+    if 'httpMethod' not in event:
+        raise Exception('Not an HTTP event')
     if event['httpMethod'] != 'POST':
         return {
             'errorType': 'BadRequest',
