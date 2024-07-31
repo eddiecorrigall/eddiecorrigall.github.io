@@ -9,12 +9,12 @@ def get_chatbot_response(request):
     # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
     conversation = [
         {
-            'role': 'assistant',
-            'content': [{'text': 'You are a helpful assistant.'}]
-        },
-        {
             'role': 'user',
             'content': [{'text': request}],
+        },
+        {
+            'role': 'assistant',
+            'content': [{'text': 'You are a helpful assistant.'}]
         }
     ]
     response = bedrock.converse(
