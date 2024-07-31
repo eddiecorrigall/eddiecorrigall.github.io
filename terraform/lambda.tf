@@ -54,7 +54,8 @@ resource "aws_iam_role_policy_attachment" "basic" {
 
 resource "null_resource" "lambda_requirements" {
   triggers = {
-    requirements = filesha1("${path.module}/../chatbot/requirements.txt")
+    # requirements = filesha1("${path.module}/../chatbot/requirements.txt")
+    always = "${timestamp()}"
   }
   # the command to install python and dependencies to the machine and zips
   provisioner "local-exec" {
