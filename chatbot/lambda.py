@@ -44,7 +44,7 @@ class Message:
 
     def __str__(self):
         return json.dumps({
-            'is_user': self.is_user,
+            'is_user': self.role == 'user',
             'date': self.date.isoformat(),
             'text': self.text,
         })
@@ -107,7 +107,7 @@ def message(conversation_id):
         )
         assistant_message = ask_chatbot(conversation_id=conversation_id, latest_user_message=user_message)
         # Provide a new user message, get a response from the model
-        return jsonify(assistant_message), 201
+        return str(assistant_message), 201
     else:
         # Get the entire conversation
         return jsonify('OK!'), 200
