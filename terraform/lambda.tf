@@ -118,7 +118,7 @@ resource "aws_apigatewayv2_api" "chatbot" {
   }
 }
 
-resource "aws_apigatewayv2_integration" "chatbot2" {
+resource "aws_apigatewayv2_integration" "chatbot" {
   # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration
 
   api_id = aws_apigatewayv2_api.chatbot.id
@@ -133,8 +133,8 @@ resource "aws_apigatewayv2_route" "chatbot_message" {
 
   api_id = aws_apigatewayv2_api.chatbot.id
 
-  route_key = "ANY /v2/chatbot/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.chatbot2.id}"
+  route_key = "ANY /chatbot/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.chatbot.id}"
 }
 
 resource "aws_apigatewayv2_stage" "production" {
