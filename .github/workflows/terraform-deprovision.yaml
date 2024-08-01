@@ -1,4 +1,4 @@
-name: Deprovision Infrastructure
+name: 'Terraform: Deprovision API on AWS'
 
 on: [workflow_dispatch]
 

@@ -1,4 +1,4 @@
-name: 'Terraform: Deploy API to AWS'
+name: 'Terraform: Provision API on AWS'
 
 on: [push]
 
