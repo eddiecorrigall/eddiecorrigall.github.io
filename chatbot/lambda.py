@@ -70,7 +70,8 @@ def ask_chatbot(conversation_id, latest_user_message):
         key=lambda message: message.date,
     )
     bedrock_conversation = map(lambda message: message.to_bedrock(), bedrock_conversation)
-    print('bedrock_conversation: ' + json.dumps(bedrock_conversation))
+    bedrock_conversation = list(bedrock_conversation)
+    print('DEBUG - bedrock_conversation: ' + json.dumps(bedrock_conversation))
     # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
     response = bedrock.converse(
         # modelId='meta.llama3-1-405b-instruct-v1:0',
