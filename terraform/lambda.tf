@@ -124,6 +124,16 @@ resource "aws_apigatewayv2_integration" "chatbot" {
   api_id = aws_apigatewayv2_api.chatbot.id
 
   integration_uri    = aws_lambda_function.chatbot.invoke_arn
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+}
+
+resource "aws_apigatewayv2_integration" "chatbot2" {
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration
+
+  api_id = aws_apigatewayv2_api.chatbot.id
+
+  integration_uri    = aws_lambda_function.chatbot.invoke_arn
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
 }
@@ -134,7 +144,7 @@ resource "aws_apigatewayv2_route" "chatbot_message" {
   api_id = aws_apigatewayv2_api.chatbot.id
 
   route_key = "ANY /chatbot/{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.chatbot.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.chatbot2.id}"
 }
 
 resource "aws_apigatewayv2_stage" "production" {
