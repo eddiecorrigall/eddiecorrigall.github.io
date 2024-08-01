@@ -38,7 +38,7 @@ def get_chatbot_response(messages):
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
 
-PREFIX = 'chatbot'
+PREFIX = '/chatbot'
 
 @app.route(PREFIX + '/')
 def home():
