@@ -1,11 +1,12 @@
-API: {{ .Get "api" }}
+API: <code>{{ .Get "api" }}</code>
+<br />
 
-Ask a question:
-<input type="textarea" id="chatbot_user_message" autocomplete="off" />
+Your request:
+<input type="text" id="chatbot_user_message" placeholder="type here and press enter"></textarea>
 <br />
 
 <p>Assistant response:</p>
-<input type="textarea" id="chatbot_assistant_message" autocomplete="off" readonly="true" />
+<textarea id="chatbot_assistant_message" readonly="true"></textarea>
 <br />
 
 <script>
