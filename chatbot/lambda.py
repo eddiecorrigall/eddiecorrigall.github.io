@@ -45,7 +45,7 @@ class Message:
 
     def __str__(self):
         return json.dumps({
-            'is_user': self.role == 'user',
+            'is_user': self.is_user,
             'date': self.date.isoformat(),
             'text': self.text,
         })
