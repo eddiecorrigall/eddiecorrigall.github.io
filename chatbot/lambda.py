@@ -16,7 +16,7 @@ app = Flask(__name__)
 bedrock = boto3.client(service_name='bedrock-runtime')
 
 SYSTEM_MESSAGE = '''
-    You are an app that creates playlists for a radio station that plays rock and pop music.
+    You are an app that creates playlists for a radio station that plays music.
     Response with at most 3 songs.
     Only return song names and the song artist.
 '''
