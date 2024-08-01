@@ -68,11 +68,12 @@ def ask_chatbot(conversation_id, latest_user_message):
     # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
     conversation = save_message(conversation_id=conversation_id, message=latest_user_message)
     # Convert to bedrock conversation...
+    bedrock_conversation = list(conversation)
     bedrock_conversation = sorted(
-        conversation,
+        bedrock_conversation,
         key=lambda message: message.date,
     )
-    bedrock_conversation = map(lambda message: message.to_bedrock())
+    bedrock_conversation = map(lambda message: message.to_bedrock(), bedrock_conversation)
     # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
     response = bedrock.converse(
         # modelId='meta.llama3-1-405b-instruct-v1:0',
