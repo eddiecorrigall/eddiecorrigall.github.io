@@ -15,18 +15,20 @@ Ask a question:
     const assistantMessageTextInput = document.getElementById('chatbot_assistant_message');
 
     const handleAssistantMessage = (assistantMessage) => {
-        console.log(`Assistant message: ${assistantMessage}`)
-        const assistantMessageObject = JSON.parse(assistantMessage);
-        assistantMessageTextInput.value = assistantMessageObject.text;
+        console.log(`Assistant message: ${assistantMessage}`);
+        assistantMessageTextInput.value = assistantMessage;
     }
 
-    const submitUserMessage = (message) => {
-        console.log('submitMessage', message);
+    const submitUserMessage = (userMessage) => {
+        console.log(`User message: ${userMessage}`);
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-                const assistantMessage = xmlHttp.responseText;
-                handleAssistantMessage(assistantMessage);
+            if (xmlHttp.readyState == 4) {
+                if (200 <= xmlHttp.status && xmlHttp.status < 300) {
+                    const assistantMessage = xmlHttp.responseText;
+                    const assistantMessageObject = JSON.parse(assistantMessage);
+                    handleAssistantMessage(assistantMessageObject.text);
+                }
             }
         }
         const conversationId = '123'; // TODO
@@ -41,7 +43,7 @@ Ask a question:
     userMessageTextInput.addEventListener('keypress', (event) => {
         if (event.key !== 'Enter') return;
         event.preventDefault();
-        const message = event.target.value;
+        const userMessage = event.target.value;
         submitUserMessage(message);
     });
 </script>
