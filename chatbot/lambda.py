@@ -50,6 +50,6 @@ def home():
 def health():
     return jsonify(status=200, message='OK!')
 
-@app.route(PREFIX + '/conversation/<conversation_id>/message')
-def message():
-    return jsonify(status=200, message='OK!')
+@app.route(PREFIX + '/conversation/<int:conversation_id>/message')
+def message(conversation_id):
+    return jsonify(status=200, message=f'conversation: {conversation_id}!')
