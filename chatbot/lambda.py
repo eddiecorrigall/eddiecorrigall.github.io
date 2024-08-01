@@ -90,7 +90,7 @@ def lambda_handler(event, context):
     print('DEBUG - EVENT: ' + json.dumps(event))
     return awsgi.response(app, event, context)
 
-PREFIX = '/production/chatbot'
+PREFIX = '/live/chatbot'
 
 @app.route(PREFIX + '/health')
 def health():
