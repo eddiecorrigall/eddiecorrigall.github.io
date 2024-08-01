@@ -145,6 +145,16 @@ resource "aws_apigatewayv2_stage" "chatbot_production" {
   name   = "production"
 
   auto_deploy = true
+}
+
+resource "aws_apigatewayv2_stage" "chatbot_live" {
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_stage#throttling_burst_limit
+  # https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-throttling.html
+
+  api_id = aws_apigatewayv2_api.chatbot.id
+  name   = "live"
+
+  auto_deploy = true
 
   default_route_settings {
     detailed_metrics_enabled = true
