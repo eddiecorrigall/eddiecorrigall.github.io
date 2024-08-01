@@ -97,19 +97,15 @@ PREFIX = '/live/chatbot'
 def health():
     return jsonify(status=200, message='OK!')
 
-@app.route(PREFIX + '/conversation/<int:conversation_id>', methods=['GET', 'POST'])
+@app.route(PREFIX + '/conversation/<int:conversation_id>', methods=['POST'])
 def message(conversation_id):
-    if request.method == 'POST':
-        request_json = request.json
-        if 'text' not in request_json:
-            return abort(400, 'JSON body missing text')
-        user_message = Message.from_user(
-            date=datetime.now(),
-            text=request_json['text'],
-        )
-        assistant_message = ask_chatbot(conversation_id=conversation_id, latest_user_message=user_message)
-        # Provide a new user message, get a response from the model
-        return str(assistant_message), 201
-    else:
-        # Get the entire conversation
-        return jsonify('OK!'), 200
+    request_json = request.json
+    if 'text' not in request_json:
+        return abort(400, 'JSON body missing text')
+    user_message = Message.from_user(
+        date=datetime.now(),
+        text=request_json['text'],
+    )
+    assistant_message = ask_chatbot(conversation_id=conversation_id, latest_user_message=user_message)
+    # Provide a new user message, get a response from the model
+    return str(assistant_message), 201
