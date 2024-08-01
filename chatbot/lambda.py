@@ -6,6 +6,7 @@ from datetime import datetime
 
 from flask import (
     Flask,
+    abort,
     jsonify,
     request,
 )
@@ -100,6 +101,8 @@ def health():
 def message(conversation_id):
     if request.method == 'POST':
         request_json = request.json
+        if 'text' not in request_json:
+            return abort(400, 'JSON body missing text')
         user_message = Message.from_user(
             date=datetime.now(),
             text=request_json['text'],
