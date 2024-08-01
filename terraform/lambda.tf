@@ -133,7 +133,7 @@ resource "aws_apigatewayv2_route" "chatbot_message" {
 
   api_id = aws_apigatewayv2_api.chatbot.id
 
-  route_key = "ANY /chatbot"
+  route_key = "ANY /chatbot/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.chatbot.id}"
 }
 
