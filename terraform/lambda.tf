@@ -137,6 +137,15 @@ resource "aws_apigatewayv2_route" "chatbot_message" {
   target    = "integrations/${aws_apigatewayv2_integration.chatbot.id}"
 }
 
+resource "aws_apigatewayv2_stage" "production" {
+  api_id = aws_apigatewayv2_api.chatbot.id
+  name   = "production"
+
+  auto_deploy = true
+}
+
+# Lambda Permissions
+
 resource "aws_lambda_permission" "chatbot" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
