@@ -1,7 +1,5 @@
 import awsgi
 import boto3
-import json
-import traceback
 
 from flask import (
     Flask,
@@ -39,6 +37,10 @@ def get_chatbot_response(messages):
 
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
+
+@app.route('/')
+def health():
+    return jsonify(status=200, message='ROOT!')
 
 @app.route('/health')
 def health():

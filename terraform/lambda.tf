@@ -124,8 +124,8 @@ resource "aws_apigatewayv2_integration" "chatbot" {
   api_id = aws_apigatewayv2_api.chatbot.id
 
   integration_uri    = aws_lambda_function.chatbot.invoke_arn
-  integration_type   = "AWS_PROXY"
-  integration_method = "POST"
+  integration_type   = "HTTP_PROXY"
+  integration_method = "ANY"
 }
 
 resource "aws_apigatewayv2_route" "chatbot_message" {
