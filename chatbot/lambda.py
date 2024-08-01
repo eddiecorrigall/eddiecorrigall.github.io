@@ -23,14 +23,14 @@ SYSTEM_MESSAGE = (
 class Message:
     @classmethod
     def from_user(cls, date, text):
-        return cls('user', date, text)
+        return cls(True, date, text)
 
     @classmethod
     def from_assistant(cls, date, text):
-        return cls('assistant', date, text)
+        return cls(False, date, text)
 
-    def __init__(self, role, date, text):
-        self.role = role
+    def __init__(self, is_user, date, text):
+        self.is_user = is_user
         self.date = date
         self.text = text
 
@@ -38,7 +38,7 @@ class Message:
         return {
             # user — The human that is sending messages to the model
             # assistant — The model that is sending messages back to the human user
-            'role': self.role,
+            'role': 'user' if self.is_user else 'assistant',
             'content': [{'text': self.text}]
         }
 
