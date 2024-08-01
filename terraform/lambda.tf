@@ -110,7 +110,7 @@ resource "aws_apigatewayv2_api" "chatbot" {
   name          = "chatpot_api"
   protocol_type = "HTTP"
 
-  cors_configuration = {
+  cors_configuration {
     allow_headers = ["content-type"]
     allow_methods = ["GET", "POST", "OPTIONS"]
     allow_origins = ["*"]
