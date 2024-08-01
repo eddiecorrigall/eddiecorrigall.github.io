@@ -137,11 +137,23 @@ resource "aws_apigatewayv2_route" "chatbot_message" {
   target    = "integrations/${aws_apigatewayv2_integration.chatbot.id}"
 }
 
-resource "aws_apigatewayv2_stage" "production" {
+resource "aws_apigatewayv2_stage" "chatbot_production" {
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_stage#throttling_burst_limit
+  # https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-throttling.html
+
   api_id = aws_apigatewayv2_api.chatbot.id
   name   = "production"
 
   auto_deploy = true
+  detailed_metrics_enabled = true
+
+  # The burst limit defines the number of requests your API can handle concurrently
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-routesettings.html#cfn-apigatewayv2-stage-routesettings-throttlingburstlimit
+  throttling_burst_limit = 3
+
+  # The rate limit defines the number of allowed requests per second
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-routesettings.html#cfn-apigatewayv2-stage-routesettings-throttlingratelimit
+  throttling_rate_limit = 0.1
 }
 
 # Lambda Invoke Permissions
