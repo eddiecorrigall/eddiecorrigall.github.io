@@ -39,8 +39,8 @@ def lambda_handler(event, context):
     return awsgi.response(app, event, context)
 
 @app.route('/')
-def health():
-    return jsonify(status=200, message='ROOT!')
+def home():
+    return jsonify(status=200, message='HOME!')
 
 @app.route('/health')
 def health():
