@@ -38,10 +38,9 @@ def get_chatbot_response(messages):
 
 def lambda_handler(event, context):
     print('DEBUG - EVENT: ' + json.dumps(event))
-    print('DEBUG - CONTEXT: ' + json.dumps(context))
     return awsgi.response(app, event, context)
 
-PREFIX = '/chatbot'
+PREFIX = '/production/chatbot'
 
 @app.route(PREFIX + '/')
 def home():
