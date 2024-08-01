@@ -1,30 +1,32 @@
 API: {{ .Get "api" }}
 
 Ask a question:
-<input type="text" id="chatbot_prompt" autocomplete="off" />
-
+<input type="textarea" id="chatbot_user_message" autocomplete="off" />
 <br />
 
-Get a response:
-<p id="chatbot_response"></p>
+<p>Assistant response:</p>
+<input type="textarea" id="chatbot_assistant_message" autocomplete="off" readonly="true" />
+<br />
 
 <script>
     const API_URL = 'https://uz0k9wxh33.execute-api.ca-central-1.amazonaws.com/live';
 
-    const prompt = document.getElementById('chatbot_prompt');
-    let timeoutId;
+    const userMessageTextInput = document.getElementById('chatbot_user_message');
+    const assistantMessageTextInput = document.getElementById('chatbot_assistant_message');
 
-    const handleResponse = (response) => {
-        console.log('handleResponse', response);
+    const handleAssistantMessage = (assistantMessage) => {
+        console.log(`Assistant message: ${assistantMessage}`)
+        const assistantMessageObject = JSON.parse(assistantMessage);
+        assistantMessageTextInput.value = assistantMessageObject.text;
     }
 
-    const submitPromptDelay = 1000; // milliseconds
-    const submitPrompt = (prompt) => {
-        console.log('submitPrompt', prompt);
+    const submitUserMessage = (message) => {
+        console.log('submitMessage', message);
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-                handleResponse(xmlHttp.responseText);
+                const assistantMessage = xmlHttp.responseText;
+                handleAssistantMessage(assistantMessage);
             }
         }
         const conversationId = '123'; // TODO
@@ -32,15 +34,14 @@ Get a response:
         xmlHttp.open('POST', `${API_URL}/chatbot/conversation/${conversationId}`, isAsynchronous);
         xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xmlHttp.send(JSON.stringify({
-            'text': prompt,
+            'text': message,
         }));
     };
 
-    prompt.addEventListener('keyup', (event) => {
-        if (timeoutId !== undefined) {
-            clearTimeout(timeoutId);
-        }
-        const prompt = event.target.value;
-        timeoutId = setTimeout(submitPrompt, submitPromptDelay, prompt);
+    userMessageTextInput.addEventListener('keypress', (event) => {
+        if (event.key !== 'Enter') return;
+        event.preventDefault();
+        const message = event.target.value;
+        submitUserMessage(message);
     });
 </script>
