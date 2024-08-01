@@ -102,25 +102,38 @@ resource "aws_lambda_function" "chatbot" {
 #   authorization_type = "NONE"
 # }
 
-# API Gateway
+# API Gateway V2
 
 resource "aws_apigatewayv2_api" "chatbot" {
-  name          = "serverless_lambda_gw"
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api
+
+  name          = "chatpot_api"
   protocol_type = "HTTP"
+
+  cors_configuration = {
+    allow_headers = ["content-type"]
+    allow_methods = ["GET", "POST", "OPTIONS"]
+    allow_origins = ["*"]
+    max_age = 300
+  }
 }
 
 resource "aws_apigatewayv2_integration" "chatbot" {
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_integration
+
   api_id = aws_apigatewayv2_api.chatbot.id
 
   integration_uri    = aws_lambda_function.chatbot.invoke_arn
   integration_type   = "AWS_PROXY"
-  integration_method = "POST"
+  integration_method = "ANY"
 }
 
-resource "aws_apigatewayv2_route" "chatbot" {
+resource "aws_apigatewayv2_route" "chatbot_message" {
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_route
+
   api_id = aws_apigatewayv2_api.chatbot.id
 
-  route_key = "POST /chatbot/{conversationID}/message"
+  route_key = "ANY /chatbot/{conversationID}/message"
   target    = "integrations/${aws_apigatewayv2_integration.chatbot.id}"
 }
 
