@@ -38,14 +38,16 @@ def get_chatbot_response(messages):
 def lambda_handler(event, context):
     return awsgi.response(app, event, context)
 
-@app.route('/')
+PREFIX = 'chatbot'
+
+@app.route(PREFIX + '/')
 def home():
     return jsonify(status=200, message='HOME!')
 
-@app.route('/health')
+@app.route(PREFIX + '/health')
 def health():
     return jsonify(status=200, message='OK!')
 
-@app.route('/conversation/{id}/message')
+@app.route(PREFIX + '/conversation/{id}/message')
 def message():
     return jsonify(status=200, message='OK!')
