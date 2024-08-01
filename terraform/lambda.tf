@@ -145,15 +145,18 @@ resource "aws_apigatewayv2_stage" "chatbot_production" {
   name   = "production"
 
   auto_deploy = true
-  detailed_metrics_enabled = true
 
-  # The burst limit defines the number of requests your API can handle concurrently
-  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-routesettings.html#cfn-apigatewayv2-stage-routesettings-throttlingburstlimit
-  throttling_burst_limit = 3
+  default_route_settings {
+    detailed_metrics_enabled = true
 
-  # The rate limit defines the number of allowed requests per second
-  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-routesettings.html#cfn-apigatewayv2-stage-routesettings-throttlingratelimit
-  throttling_rate_limit = 0.1
+    # The burst limit defines the number of requests your API can handle concurrently
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-routesettings.html#cfn-apigatewayv2-stage-routesettings-throttlingburstlimit
+    throttling_burst_limit = 3
+
+    # The rate limit defines the number of allowed requests per second
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-routesettings.html#cfn-apigatewayv2-stage-routesettings-throttlingratelimit
+    throttling_rate_limit = 0.1
+  }
 }
 
 # Lambda Invoke Permissions
