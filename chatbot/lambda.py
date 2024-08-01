@@ -39,12 +39,12 @@ class Message:
         self.text = text
 
     def to_bedrock(self):
-        return json.dumps({
+        return {
             # user — The human that is sending messages to the model
             # assistant — The model that is sending messages back to the human user
             'role': self.role,
             'content': [{'text': self.text}]
-        })
+        }
 
     def __str__(self):
         return json.dumps({
