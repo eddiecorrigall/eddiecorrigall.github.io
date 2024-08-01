@@ -3,21 +3,23 @@ API: <code>{{ .Get "api" }}</code>
 
 Request a song list:
 <input type="text" id="chatbot_user_message" placeholder="type here and press enter"></textarea>
+<button id="chatbot_submit" type="button">Submit</button>
 <br />
 
 <p>Assistant response:</p>
-<p id="chatbot_assistant_message"></p>
+<textarea id="chatbot_assistant_message" cols="100" rows="1000"></textarea>
 <br />
 
 <script>
     const API_URL = 'https://uz0k9wxh33.execute-api.ca-central-1.amazonaws.com/live';
 
     const userMessageTextInput = document.getElementById('chatbot_user_message');
+    const submitButton = document.getElementById('chatbot_submit');
     const assistantMessageTextInput = document.getElementById('chatbot_assistant_message');
 
     const handleAssistantMessage = (assistantMessage) => {
         console.log(`Assistant message: ${assistantMessage}`);
-        assistantMessageTextInput.value = assistantMessage;
+        assistantMessageTextInput.innerHTML = assistantMessage;
     }
 
     const submitUserMessage = (userMessage) => {
@@ -41,10 +43,10 @@ Request a song list:
         }));
     };
 
-    userMessageTextInput.addEventListener('keypress', (event) => {
-        if (event.key !== 'Enter') return;
+    submitButton.addEventListener('click', (event) => {
+        console.log('User submitted request');
         event.preventDefault();
-        const userMessage = event.target.value;
+        const userMessage = userMessageTextInput.value;
         submitUserMessage(userMessage);
     });
 </script>

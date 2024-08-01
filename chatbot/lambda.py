@@ -102,9 +102,12 @@ def message(conversation_id):
     request_json = request.json
     if 'text' not in request_json:
         return abort(400, 'JSON body missing text')
+    user_message_text = request_json['text']
+    if not user_message_text:
+        return abort(400, 'JSON body text is empty')
     user_message = Message.from_user(
         date=datetime.now(),
-        text=request_json['text'],
+        text=user_message_text,
     )
     assistant_message = ask_chatbot(conversation_id=conversation_id, latest_user_message=user_message)
     # Provide a new user message, get a response from the model
