@@ -6,10 +6,12 @@ name: 'Hugo: Deploy to GitHub Pages'
 on:
   push:
     branches: [master]
+    paths:
+      - hugo/**
   workflow_dispatch:
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
