@@ -37,7 +37,7 @@ Your request:
         xmlHttp.open('POST', `${API_URL}/chatbot/conversation/${conversationId}`, isAsynchronous);
         xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xmlHttp.send(JSON.stringify({
-            'text': message,
+            'text': userMessage,
         }));
     };
 
@@ -45,6 +45,6 @@ Your request:
         if (event.key !== 'Enter') return;
         event.preventDefault();
         const userMessage = event.target.value;
-        submitUserMessage(message);
+        submitUserMessage(userMessage);
     });
 </script>
