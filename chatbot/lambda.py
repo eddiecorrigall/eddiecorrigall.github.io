@@ -99,7 +99,7 @@ def health():
 @app.route(PREFIX + '/conversation/<int:conversation_id>', methods=['GET', 'POST'])
 def message(conversation_id):
     if request.method == 'POST':
-        request_json = request.json()
+        request_json = request.json
         user_message = Message.from_user(
             date=datetime.now(),
             text=request_json['text'],
