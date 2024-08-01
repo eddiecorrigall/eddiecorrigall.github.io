@@ -15,10 +15,11 @@ from flask import (
 app = Flask(__name__)
 bedrock = boto3.client(service_name='bedrock-runtime')
 
-SYSTEM_MESSAGE = (
-    'You are an app that creates playlists for a radio station that plays rock and pop music.'
-    'Only return song names and the artist.'
-)
+SYSTEM_MESSAGE = '''
+    You are an app that creates playlists for a radio station that plays rock and pop music.
+    Response with at most 3 songs.
+    Only return song names and the song artist.
+'''
 
 class Message:
     @classmethod
