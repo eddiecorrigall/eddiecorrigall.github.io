@@ -1,11 +1,18 @@
+import awsgi
 import boto3
 import json
 import traceback
 
+from flask import (
+    Flask,
+    jsonify,
+)
 
+
+app = Flask(__name__)
 bedrock = boto3.client(service_name='bedrock-runtime')
 
-system_prompt = (
+SYSTEM_MESSAGE = (
     "You are an app that creates playlists for a radio station that plays rock and pop music."
     "Only return song names and the artist."
 )
@@ -23,7 +30,7 @@ def get_chatbot_response(messages):
         # modelId='meta.llama3-1-405b-instruct-v1:0',
         modelId='meta.llama3-70b-instruct-v1:0',
         # modelId='meta.llama3-8b-instruct-v1:0',
-        system=[{"text": system_prompt}],
+        system=[{"text": SYSTEM_MESSAGE}],
         messages=conversation,
         inferenceConfig={'maxTokens': 512, 'temperature': 0.5, 'topP': 0.9},
     )
@@ -31,39 +38,12 @@ def get_chatbot_response(messages):
     return response_text
 
 def lambda_handler(event, context):
-    if 'httpMethod' not in event:
-        raise Exception('Not an HTTP event')
-    if event['httpMethod'] != 'POST':
-        return {
-            'errorType': 'BadRequest',
-            'requestId': context.aws_request_id
-        }
-    allow_origins = [
-        'http://localhost:1313',
-        'https://eddiecorrigall.github.io'
-    ]
-    # request = event['queryStringParameters']['request']
-    request = event['body']
-    messages = [
-        request or 'Create a list of 3 pop songs.'
-    ]
-    response = ''
-    try:
-        response = get_chatbot_response(messages)
-    except Exception as e:
-        return {
-            'errorType': 'InternalServerError',
-            'requestId': context.aws_request_id,
-            # 'stackTrace': traceback.format_exc()
-        }
-    return {
-        'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*', # ', '.join(allow_origins)
-            'X-BOTO3-VERSION': boto3.__version__
-        },
-        'body': json.dumps({
-            'response': response
-        })
-    }
+    return awsgi.response(app, event, context)
+
+@app.route('/health')
+def health():
+    return jsonify(status=200, message='OK!')
+
+@app.route('/conversation/{id}/message')
+def message():
+    return jsonify(status=200, message='OK!')
