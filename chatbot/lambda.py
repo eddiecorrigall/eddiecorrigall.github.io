@@ -23,15 +23,11 @@ SYSTEM_MESSAGE = (
 class Message:
     @classmethod
     def from_user(cls, date, text):
-        return cls(date, True, text)
+        return cls('user', date, text)
 
     @classmethod
     def from_assistant(cls, date, text):
         return cls('assistant', date, text)
-
-    @classmethod
-    def from_system(cls, date, text):
-        return cls('user', date, text)
 
     def __init__(self, role, date, text):
         self.role = role
