@@ -63,8 +63,7 @@ def createMessagesTable():
                     },
                 ],
                 'Projection': {
-                    'ProjectionType': 'INCLUDE',
-                    'NonKeyAttributes': ['Text', 'Image'],
+                    'ProjectionType': 'ALL',
                 }
             },
             {
@@ -76,8 +75,7 @@ def createMessagesTable():
                     },
                 ],
                 'Projection': {
-                    'ProjectionType': 'INCLUDE',
-                    'NonKeyAttributes': ['Text', 'Image'],
+                    'ProjectionType': 'ALL',
                 },
             },
         ],
