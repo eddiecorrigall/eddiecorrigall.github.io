@@ -15,13 +15,14 @@ from flask import (
 
 app = Flask(__name__)
 bedrock = boto3.client(service_name='bedrock-runtime')
-dynamodb = boto3.resource(service_name='dynamodb')
+dynamodb = boto3.client(service_name='dynamodb')
+dynamodb_resource = boto3.resource(service_name='dynamodb')
 
 MESSAGES_TABLE_NAME = "ChatbotMessages"
 
 def hasMessagesTable():
     try:
-        dynamodb.Table(MESSAGES_TABLE_NAME).table_status
+        dynamodb_resource.Table(MESSAGES_TABLE_NAME).table_status
         return True
     except dynamodb.meta.client.exceptions.ResourceNotFoundException:
         return False
@@ -34,7 +35,7 @@ def hasMessagesTableRetentionPolicyEnabled():
         return False
 
 def getMessagesTable():
-    return dynamodb.Table(MESSAGES_TABLE_NAME)
+    return dynamodb_resource.Table(MESSAGES_TABLE_NAME)
 
 def createMessagesTable():
     dynamodb.create_table(
