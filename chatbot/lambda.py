@@ -48,10 +48,6 @@ def createMessagesTable():
                 'AttributeName': 'CreatedAt',
                 'AttributeType': 'N',
             },
-            {
-                'AttributeName': 'ExpiresAt',
-                'AttributeType': 'N',
-            },
         ],
         KeySchema=[
             {
