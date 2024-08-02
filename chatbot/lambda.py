@@ -17,8 +17,96 @@ app = Flask(__name__)
 bedrock = boto3.client(service_name='bedrock-runtime')
 dynamodb = boto3.resource(service_name='dynamodb')
 
-MESSAGES_TABLE_NAME = os.getenv('DYNAMODB_MESSAGES_TABLE')
-MESSAGES_TABLE = dynamodb.Table(MESSAGES_TABLE_NAME)
+MESSAGES_TABLE_NAME = "ChatbotMessages"
+
+def getMessagesTable():
+    return dynamodb.Table(MESSAGES_TABLE_NAME)
+
+def createMessagesTable():
+    table = dynamodb.create_table(
+        TableName=MESSAGES_TABLE_NAME,
+        AttributeDefinitions=[
+            {
+                'AttributeName': 'ConversationID',
+                'AttributeType': 'S',
+            },
+            {
+                'AttributeName': 'CreatedAt',
+                'AttributeType': 'N',
+            },
+            {
+                'AttributeName': 'Role',
+                'AttributeType': 'S',
+            },
+            {
+                'AttributeName': 'Text',
+                'AttributeType': 'S',
+            },
+            {
+                'AttributeName': 'Image',
+                'AttributeType': 'B',
+            },
+        ],
+        KeySchema=[
+            {
+                'AttributeName': 'ConversationID',
+                'KeyType': 'HASH',
+            },
+            {
+                'AttributeName': 'CreatedAt',
+                'KeyType': 'RANGE',
+            },
+        ],
+        LocalSecondaryIndexes=[
+            {
+                'IndexName': 'RoleIndex',
+                'KeySchema': [
+                    {
+                        'AttributeName': 'Role',
+                        'KeyType': 'RANGE',
+                    },
+                ],
+                'Projection': {
+                    'ProjectionType': 'INCLUDE',
+                    'NonKeyAttributes': ['Text', 'Image'],
+                },
+            },
+        ],
+        GlobalSecondaryIndexes=[
+            {
+                'IndexName': 'string',
+                'KeySchema': [
+                    {
+                        'AttributeName': 'string',
+                        'KeyType': 'HASH'|'RANGE'
+                    },
+                ],
+                'Projection': {
+                    'ProjectionType': 'ALL'|'KEYS_ONLY'|'INCLUDE',
+                    'NonKeyAttributes': [
+                        'string',
+                    ]
+                },
+                'ProvisionedThroughput': {
+                    'ReadCapacityUnits': 123,
+                    'WriteCapacityUnits': 123
+                },
+                'OnDemandThroughput': {
+                    'MaxReadRequestUnits': 123,
+                    'MaxWriteRequestUnits': 123
+                }
+            },
+        ],
+        BillingMode='PAY_PER_REQUEST',
+        SSESpecification={
+            'Enabled': True,
+        },
+        TableClass='STANDARD',
+        DeletionProtectionEnabled=True,
+    )
+    print('Creating messages table')
+    table.wait_until_exists()
+    return table
 
 SYSTEM_MESSAGE = '''
     You are an app that creates playlists for a radio station that plays music.
@@ -93,12 +181,14 @@ def ask_chatbot(conversation_id, latest_user_message):
     return latest_assistant_message
 
 def lambda_handler(event, context):
-    print('DEBUG - MESSAGES TABLE - {}'.format(MESSAGES_TABLE_NAME))
     print('DEBUG - EVENT - {}'.format(json.dumps(event)))
     path = '/mnt/lambda'
     files = os.listdir(path)
     print('DEBUG - FILES IN PATH "{}":'.format(path))
     print(files)
+
+    createMessagesTable()
+
     return awsgi.response(app, event, context)
 
 PREFIX = '/live/chatbot'

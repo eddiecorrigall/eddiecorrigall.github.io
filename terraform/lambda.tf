@@ -29,47 +29,6 @@ locals {
   }
 }
 
-##########
-# DynamoDB
-##########
-
-resource "aws_dynamodb_table" "chatbot" {
-  name           = "ChatbotMessages"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "ConversationID"
-  range_key      = "CreatedAt"
-
-  attribute {
-    name = "ConversationID"
-    type = "S"
-  }
-
-  attribute {
-    name = "CreatedAt"
-    type = "N"
-  }
-
-  attribute {
-    name = "Role"
-    type = "S"
-  }
-
-  attribute {
-    name = "Text"
-    type = "S"
-  }
-
-  attribute {
-    name = "Image"
-    type = "B"
-  }
-
-  ttl {
-    attribute_name = "ExpiresAt"
-    enabled        = true
-  }
-}
-
 ########
 # Lambda
 ########
@@ -133,11 +92,9 @@ resource "aws_lambda_function" "chatbot" {
 
   environment {
     variables = {
-      DYNAMODB_MESSAGES_TABLE = aws_dynamodb_table.chatbot.name
+      foo = "bar"
     }
   }
-
-  depends_on = [aws_dynamodb_table.chatbot]
 }
 
 ################
