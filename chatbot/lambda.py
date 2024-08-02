@@ -24,7 +24,7 @@ def hasMessagesTable():
     try:
         dynamodb_resource.Table(MESSAGES_TABLE_NAME).table_status
         return True
-    except dynamodb.meta.client.exceptions.ResourceNotFoundException:
+    except dynamodb_resource.meta.client.exceptions.ResourceNotFoundException:
         return False
 
 def hasMessagesTableRetentionPolicyEnabled():
