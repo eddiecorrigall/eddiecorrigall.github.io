@@ -15,6 +15,10 @@ from flask import (
 
 app = Flask(__name__)
 bedrock = boto3.client(service_name='bedrock-runtime')
+dynamodb = boto3.resource(service_name='dynamodb')
+
+MESSAGES_TABLE_NAME = os.getenv('DYNAMODB_MESSAGES_TABLE')
+MESSAGES_TABLE = dynamodb.Table(MESSAGES_TABLE_NAME)
 
 SYSTEM_MESSAGE = '''
     You are an app that creates playlists for a radio station that plays music.
@@ -89,7 +93,8 @@ def ask_chatbot(conversation_id, latest_user_message):
     return latest_assistant_message
 
 def lambda_handler(event, context):
-    print('DEBUG - EVENT: ' + json.dumps(event))
+    print('DEBUG - MESSAGES TABLE - {}'.format(MESSAGES_TABLE_NAME))
+    print('DEBUG - EVENT - {}'.format(json.dumps(event)))
     path = '/mnt/lambda'
     files = os.listdir(path)
     print('DEBUG - FILES IN PATH "{}":'.format(path))

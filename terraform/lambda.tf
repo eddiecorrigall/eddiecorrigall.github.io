@@ -29,34 +29,46 @@ locals {
   }
 }
 
-######
-# EFS
-######
+##########
+# DynamoDB
+##########
 
-resource "aws_efs_file_system" "shared" {}
+resource "aws_dynamodb_table" "chatbot" {
+  name           = "ChatbotMessages"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "ConversationID"
+  range_key      = "CreatedAt"
 
-resource "aws_efs_mount_target" "chatbot" {
-  file_system_id  = aws_efs_file_system.shared.id
-}
-
-resource "aws_efs_access_point" "chatbot" {
-  file_system_id = aws_efs_file_system.shared.id
-
-  posix_user {
-    gid = 1000
-    uid = 1000
+  attribute {
+    name = "ConversationID"
+    type = "S"
   }
 
-  root_directory {
-    path = "/chatbot"
-    creation_info {
-      owner_gid   = 1000
-      owner_uid   = 1000
-      permissions = "0777"
-    }
+  attribute {
+    name = "CreatedAt"
+    type = "N"
+  }
+
+  attribute {
+    name = "Role"
+    type = "S"
+  }
+
+  attribute {
+    name = "Text"
+    type = "S"
+  }
+
+  attribute {
+    name = "Image"
+    type = "B"
+  }
+
+  ttl {
+    attribute_name = "ExpiresAt"
+    enabled        = true
   }
 }
-
 
 ########
 # Lambda
@@ -121,15 +133,11 @@ resource "aws_lambda_function" "chatbot" {
 
   environment {
     variables = {
-      foo = "bar"
-      STORAGE_PATH = "/mnt/lambda"
+      DYNAMODB_MESSAGES_TABLE = aws_dynamodb_table.chatbot.name
     }
   }
 
-  file_system_arn              = aws_efs_access_point.chatbot.arn
-  file_system_local_mount_path = "/mnt/lambda"
-
-  depends_on = [aws_efs_mount_target.chatbot]
+  depends_on = [aws_dynamodb_table.chatbot]
 }
 
 ################
