@@ -19,11 +19,18 @@ dynamodb = boto3.resource(service_name='dynamodb')
 
 MESSAGES_TABLE_NAME = "ChatbotMessages"
 
+def hasMessagesTable():
+    try:
+        dynamodb.Table(MESSAGES_TABLE_NAME).table_status
+        return True
+    except dynamodb.meta.client.exceptions.ResourceNotFoundException:
+        return False
+
 def getMessagesTable():
     return dynamodb.Table(MESSAGES_TABLE_NAME)
 
 def createMessagesTable():
-    table = dynamodb.create_table(
+    return dynamodb.create_table(
         TableName=MESSAGES_TABLE_NAME,
         AttributeDefinitions=[
             {
@@ -52,9 +59,6 @@ def createMessagesTable():
         TableClass='STANDARD',
         DeletionProtectionEnabled=True,
     )
-    print('Creating messages table')
-    table.wait_until_exists()
-    return table
 
 SYSTEM_MESSAGE = '''
     You are an app that creates playlists for a radio station that plays music.
@@ -131,7 +135,14 @@ def ask_chatbot(conversation_id, latest_user_message):
 def lambda_handler(event, context):
     print('DEBUG - EVENT - {}'.format(json.dumps(event)))
 
-    createMessagesTable()
+    if not hasMessagesTable():
+        createMessagesTable()
+        return {
+            'statusCode': 503,
+            'body': 'Service unavailable'
+        }
+
+    table = getMessagesTable()
 
     return awsgi.response(app, event, context)
 
