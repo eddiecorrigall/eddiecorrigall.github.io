@@ -58,6 +58,10 @@ def createMessagesTable():
                 'IndexName': 'CreatedAtIndex',
                 'KeySchema': [
                     {
+                        'AttributeName': 'ConversationID',
+                        'KeyType': 'HASH',
+                    },
+                    {
                         'AttributeName': 'CreatedAt',
                         'KeyType': 'RANGE',
                     },
@@ -69,6 +73,10 @@ def createMessagesTable():
             {
                 'IndexName': 'RoleIndex',
                 'KeySchema': [
+                    {
+                        'AttributeName': 'ConversationID',
+                        'KeyType': 'HASH',
+                    },
                     {
                         'AttributeName': 'Role',
                         'KeyType': 'HASH',
