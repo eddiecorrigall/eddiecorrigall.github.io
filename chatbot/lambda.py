@@ -52,12 +52,21 @@ def createMessagesTable():
                 'AttributeName': 'ConversationID',
                 'KeyType': 'HASH',
             },
-            {
-                'AttributeName': 'CreatedAt',
-                'KeyType': 'RANGE',
-            },
         ],
         LocalSecondaryIndexes=[
+            {
+                'IndexName': 'CreatedAtIndex',
+                'KeySchema': [
+                    {
+                        'AttributeName': 'CreatedAt',
+                        'KeyType': 'RANGE',
+                    },
+                ],
+                'Projection': {
+                    'ProjectionType': 'INCLUDE',
+                    'NonKeyAttributes': ['Text', 'Image'],
+                }
+            },
             {
                 'IndexName': 'RoleIndex',
                 'KeySchema': [
