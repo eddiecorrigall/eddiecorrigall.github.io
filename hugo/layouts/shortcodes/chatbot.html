@@ -24,14 +24,23 @@ Request a song list:
 
     const submitUserMessage = (userMessage) => {
         console.log(`User message: ${userMessage}`);
+        if (!userMessage) return;
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState == 4) {
-                if (200 <= xmlHttp.status && xmlHttp.status < 300) {
+                const isSuccessful = xmlHttp.status === 201;
+                if (isSuccessful) {
                     const assistantMessage = xmlHttp.responseText;
                     const assistantMessageObject = JSON.parse(assistantMessage);
                     handleAssistantMessage(assistantMessageObject.text);
+                    return;
                 }
+                const hasTooManyRequests = xmlHttp.status === 429;
+                if (hasTooManyRequests) {
+                    handleAssistantMessage('Too many requests, please try again later.');
+                    return;
+                }
+                handleAssistantMessage('Something went wrong...');
             }
         }
         const conversationId = '123'; // TODO
