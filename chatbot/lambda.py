@@ -54,7 +54,7 @@ def createMessagesTable():
             },
             {
                 'AttributeName': 'CreatedAt',
-                'KeyType': 'Range',
+                'KeyType': 'RANGE',
             },
         ],
         LocalSecondaryIndexes=[
