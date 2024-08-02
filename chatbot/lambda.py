@@ -34,18 +34,6 @@ def createMessagesTable():
                 'AttributeName': 'CreatedAt',
                 'AttributeType': 'N',
             },
-            {
-                'AttributeName': 'Role',
-                'AttributeType': 'S',
-            },
-            {
-                'AttributeName': 'Text',
-                'AttributeType': 'S',
-            },
-            {
-                'AttributeName': 'Image',
-                'AttributeType': 'B',
-            },
         ],
         KeySchema=[
             {
@@ -55,24 +43,6 @@ def createMessagesTable():
             {
                 'AttributeName': 'CreatedAt',
                 'KeyType': 'RANGE',
-            },
-        ],
-        LocalSecondaryIndexes=[
-            {
-                'IndexName': 'RoleIndex',
-                'KeySchema': [
-                    {
-                        'AttributeName': 'ConversationID',
-                        'KeyType': 'HASH',
-                    },
-                    {
-                        'AttributeName': 'Role',
-                        'KeyType': 'HASH',
-                    },
-                ],
-                'Projection': {
-                    'ProjectionType': 'ALL',
-                },
             },
         ],
         BillingMode='PAY_PER_REQUEST',
