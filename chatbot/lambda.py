@@ -72,31 +72,6 @@ def createMessagesTable():
                 },
             },
         ],
-        GlobalSecondaryIndexes=[
-            {
-                'IndexName': 'string',
-                'KeySchema': [
-                    {
-                        'AttributeName': 'string',
-                        'KeyType': 'HASH'|'RANGE'
-                    },
-                ],
-                'Projection': {
-                    'ProjectionType': 'ALL'|'KEYS_ONLY'|'INCLUDE',
-                    'NonKeyAttributes': [
-                        'string',
-                    ]
-                },
-                'ProvisionedThroughput': {
-                    'ReadCapacityUnits': 123,
-                    'WriteCapacityUnits': 123
-                },
-                'OnDemandThroughput': {
-                    'MaxReadRequestUnits': 123,
-                    'MaxWriteRequestUnits': 123
-                }
-            },
-        ],
         BillingMode='PAY_PER_REQUEST',
         SSESpecification={
             'Enabled': True,
