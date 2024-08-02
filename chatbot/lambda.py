@@ -1,6 +1,7 @@
 import awsgi
 import boto3
 import json
+import os
 
 from datetime import datetime
 
@@ -89,6 +90,10 @@ def ask_chatbot(conversation_id, latest_user_message):
 
 def lambda_handler(event, context):
     print('DEBUG - EVENT: ' + json.dumps(event))
+    path = '/mnt/lambda'
+    files = os.listdir(path)
+    print('DEBUG - FILES IN PATH "{}":'.format(path))
+    print(files)
     return awsgi.response(app, event, context)
 
 PREFIX = '/live/chatbot'

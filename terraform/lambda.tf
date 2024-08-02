@@ -29,7 +29,38 @@ locals {
   }
 }
 
-# Create Lambda Function
+######
+# EFS
+######
+
+resource "aws_efs_file_system" "shared" {}
+
+resource "aws_efs_mount_target" "chatbot" {
+  file_system_id  = aws_efs_file_system.shared.id
+}
+
+resource "aws_efs_access_point" "chatbot" {
+  file_system_id = aws_efs_file_system.shared.id
+
+  posix_user {
+    gid = 1000
+    uid = 1000
+  }
+
+  root_directory {
+    path = "/chatbot"
+    creation_info {
+      owner_gid   = 1000
+      owner_uid   = 1000
+      permissions = "0777"
+    }
+  }
+}
+
+
+########
+# Lambda
+########
 
 data "aws_iam_policy_document" "lambda_exec_policy" {
   statement {
@@ -91,18 +122,19 @@ resource "aws_lambda_function" "chatbot" {
   environment {
     variables = {
       foo = "bar"
+      STORAGE_PATH = "/mnt/lambda"
     }
   }
+
+  file_system_arn              = aws_efs_access_point.chatbot.arn
+  file_system_local_mount_path = "/mnt/lambda"
+
+  depends_on = [aws_efs_mount_target.chatbot]
 }
 
-# Create public URL
-
-# resource "aws_lambda_function_url" "lambda_chatbot_url" {
-#   function_name      = aws_lambda_function.chatbot.function_name
-#   authorization_type = "NONE"
-# }
-
+################
 # API Gateway V2
+################
 
 resource "aws_apigatewayv2_api" "chatbot" {
   # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apigatewayv2_api
