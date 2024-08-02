@@ -72,7 +72,7 @@ def createMessagesTable():
                 'KeySchema': [
                     {
                         'AttributeName': 'Role',
-                        'KeyType': 'RANGE',
+                        'KeyType': 'HASH',
                     },
                 ],
                 'Projection': {
