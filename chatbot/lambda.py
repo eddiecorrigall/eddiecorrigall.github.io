@@ -26,11 +26,18 @@ def hasMessagesTable():
     except dynamodb.meta.client.exceptions.ResourceNotFoundException:
         return False
 
+def hasMessagesTableRetentionPolicyEnabled():
+    try:
+        response = dynamodb.describe_time_to_live(TableName=MESSAGES_TABLE_NAME)
+        return response['TimeToLiveDescription']['TimeToLiveStatus'] == 'ENABLED'
+    except:
+        return False
+
 def getMessagesTable():
     return dynamodb.Table(MESSAGES_TABLE_NAME)
 
 def createMessagesTable():
-    return dynamodb.create_table(
+    dynamodb.create_table(
         TableName=MESSAGES_TABLE_NAME,
         AttributeDefinitions=[
             {
@@ -39,6 +46,10 @@ def createMessagesTable():
             },
             {
                 'AttributeName': 'CreatedAt',
+                'AttributeType': 'N',
+            },
+            {
+                'AttributeName': 'ExpiresAt',
                 'AttributeType': 'N',
             },
         ],
@@ -58,6 +69,15 @@ def createMessagesTable():
         },
         TableClass='STANDARD',
         DeletionProtectionEnabled=True,
+    )
+
+def enableMessagesTableRetentionPolicyEnabled():
+    dynamodb.update_time_to_live(
+        TableName=MESSAGES_TABLE_NAME,
+        TimeToLiveSpecification={
+            'Enabled': True,
+            'AttributeName': 'ExpiresAt'
+        }
     )
 
 SYSTEM_MESSAGE = '''
@@ -139,7 +159,14 @@ def lambda_handler(event, context):
         createMessagesTable()
         return {
             'statusCode': 503,
-            'body': 'Service unavailable'
+            'body': 'Service unavailable (table)'
+        }
+
+    if not hasMessagesTableRetentionPolicyEnabled():
+        enableMessagesTableRetentionPolicyEnabled()
+        return {
+            'statusCode': 503,
+            'body': 'Service unavailable (retention policy)'
         }
 
     table = getMessagesTable()
