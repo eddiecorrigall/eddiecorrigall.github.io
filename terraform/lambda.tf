@@ -93,6 +93,7 @@ resource "aws_lambda_function" "chatbot" {
   environment {
     variables = {
       foo = "bar"
+      URL_PREFIX = '/live/chatbot'
     }
   }
 }
