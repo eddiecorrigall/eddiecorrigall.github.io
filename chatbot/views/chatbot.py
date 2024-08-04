@@ -17,7 +17,7 @@ def get_messages_dao():
     return g.messages_dao
 
 @blueprint.route('/conversation/<uuid:conversation_id>', methods=['POST'])
-def message(conversation_id):
+def message(conversation_id: str):
     request_json = request.json
     if 'text' not in request_json:
         return abort(400, 'JSON body missing text')
@@ -32,7 +32,6 @@ def message(conversation_id):
     )
     assistant_message = chatbot_send_message(
         dao=get_messages_dao(),
-        conversation_id=conversation_id,
         user_message=user_message,
     )
     # Provide a new user message, get a response from the model
