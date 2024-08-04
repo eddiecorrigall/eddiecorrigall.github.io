@@ -38,8 +38,7 @@ class MessagesDAO(BaseDAO):
         _table.put_item(Item=_to_dynamodb_message(dto, expires_at=expires_at))
 
     def find_all(self, conversation_id: str) -> List[MessageDTO]:
-        _table = self._get_table()
-        response = _table.batch_get_item(
+        response = dynamodb.batch_get_item(
             RequestItems={
                 self.table_name: {
                     'Keys': [
