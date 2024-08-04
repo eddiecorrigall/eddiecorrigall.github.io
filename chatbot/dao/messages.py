@@ -1,6 +1,6 @@
 import boto3
 
-from typing import List, Optional, Tuple
+from typing import List
 from datetime import datetime, timedelta
 
 from dto.messages import MessageDTO, MessageRole
@@ -62,9 +62,6 @@ def _create_messages_table(table_name: str) -> None:
 class MessagesDAO(BaseDAO):
     def __init__(self):
         super().__init__(table_name='ChatbotMessages')
-
-    def provision(self, **kwargs) -> Tuple[bool, Optional[str]]:
-        return super().provision(_create_messages_table, **kwargs)
 
     def insert(self, dto: MessageDTO):
         expires_at = dto.created_at + timedelta(minutes=20)
