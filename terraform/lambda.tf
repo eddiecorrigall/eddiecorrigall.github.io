@@ -96,6 +96,8 @@ resource "aws_lambda_function" "chatbot" {
       URL_PREFIX = "/live/chatbot"
     }
   }
+
+  depends_on = [aws_dynamodb_table.chatbot_messages_table]
 }
 
 ################
@@ -166,4 +168,38 @@ resource "aws_lambda_permission" "chatbot" {
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.chatbot.execution_arn}/*/*"
+}
+
+##########
+# DYNAMODB
+##########
+
+resource "aws_dynamodb_table" "chatbot_messages_table" {
+  name           = "ChatbotMessages"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "ConversationID"
+  range_key      = "CreatedAt"
+
+  deletion_protection_enabled = true
+
+  attribute {
+    name = "ConversationID"
+    type = "S"
+  }
+
+  attribute {
+    name = "CreatedAt"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  table_class = "STANDARD"
+
+  ttl {
+    attribute_name = "ExpiresAt"
+    enabled        = true
+  }
 }

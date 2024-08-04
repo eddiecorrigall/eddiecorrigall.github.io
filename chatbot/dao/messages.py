@@ -28,37 +28,6 @@ def _from_dynamodb_message(item: dict) -> MessageDTO:
         text=item['Text']['S'],
     )
 
-def _create_messages_table(table_name: str) -> None:
-    dynamodb.create_table(
-        TableName=table_name,
-        AttributeDefinitions=[
-            {
-                'AttributeName': 'ConversationID',
-                'AttributeType': 'S',
-            },
-            {
-                'AttributeName': 'CreatedAt',
-                'AttributeType': 'N',
-            },
-        ],
-        KeySchema=[
-            {
-                'AttributeName': 'ConversationID',
-                'KeyType': 'HASH',
-            },
-            {
-                'AttributeName': 'CreatedAt',
-                'KeyType': 'RANGE',
-            },
-        ],
-        BillingMode='PAY_PER_REQUEST',
-        SSESpecification={
-            'Enabled': True,
-        },
-        TableClass='STANDARD',
-        DeletionProtectionEnabled=True,
-    )
-
 class MessagesDAO(BaseDAO):
     def __init__(self):
         super().__init__(table_name='ChatbotMessages')
