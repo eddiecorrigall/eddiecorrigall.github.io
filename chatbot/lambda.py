@@ -3,8 +3,8 @@ import json
 
 from flask import Flask, g
 
-from chatbot.dao.messages import MessagesDAO
-from chatbot.views.health import blueprint as health_api
+from dao.messages import MessagesDAO
+from views.health import blueprint as health_api
 
 
 def handle_provisioning(dao) -> dict:

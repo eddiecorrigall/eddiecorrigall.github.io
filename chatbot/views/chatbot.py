@@ -3,8 +3,8 @@ import os
 from datetime import datetime
 from flask import Blueprint, abort, g, request
 
-from chatbot.dto.messages import MessageDTO, MessageRole
-from chatbot.services.chatbot import chatbot_send_message
+from dto.messages import MessageDTO, MessageRole
+from services.chatbot import chatbot_send_message
 
 
 url_prefix = os.getenv('URL_PREFIX')

@@ -3,8 +3,8 @@ import json
 
 from datetime import datetime
 
-from chatbot.dao.messages import MessagesDAO
-from chatbot.dto.messages import MessageDTO, MessageRole
+from dao.messages import MessagesDAO
+from dto.messages import MessageDTO, MessageRole
 
 
 bedrock = boto3.client(service_name='bedrock-runtime')

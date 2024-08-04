@@ -3,8 +3,8 @@ import boto3
 from typing import List, Optional, Tuple
 from datetime import datetime, timedelta
 
-from chatbot.dto.messages import MessageDTO, MessageRole
-from chatbot.dao.common import BaseDAO
+from dto.messages import MessageDTO, MessageRole
+from dao.common import BaseDAO
 
 
 dynamodb = boto3.client(service_name='dynamodb')
