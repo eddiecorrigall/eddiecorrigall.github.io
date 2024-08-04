@@ -2,6 +2,7 @@ import os
 
 from datetime import datetime
 from flask import Blueprint, abort, g, request
+from uuid import UUID
 
 from dao.messages import MessagesDAO
 from dto.messages import MessageDTO, MessageRole
@@ -17,7 +18,7 @@ def get_messages_dao():
     return g.messages_dao
 
 @blueprint.route('/conversation/<uuid:conversation_id>', methods=['POST'])
-def message(conversation_id: str):
+def message(conversation_id: UUID):
     request_json = request.json
     if 'text' not in request_json:
         return abort(400, 'JSON body missing text')
@@ -25,7 +26,7 @@ def message(conversation_id: str):
     if not user_message_text:
         return abort(400, 'JSON body text is empty')
     user_message = MessageDTO(
-        conversation_id=conversation_id,
+        conversation_id=str(conversation_id),
         role=MessageRole.USER,
         created_at=datetime.now(),
         text=user_message_text,
