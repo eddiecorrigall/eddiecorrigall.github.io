@@ -12,7 +12,7 @@ class MessageRole(Enum):
 
 
 class MessageDTO:
-    def __init__(self, conversation_id: str, role: MessageRole, created_at: datetime.datetime, text: str):
+    def __init__(self, conversation_id: str, role: MessageRole, created_at: datetime, text: str):
         self.conversation_id = conversation_id
         self.created_at = created_at
         self.role = role
