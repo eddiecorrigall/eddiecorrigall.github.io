@@ -8,9 +8,9 @@ from services.chatbot import chatbot_send_message
 
 
 url_prefix = os.getenv('URL_PREFIX')
-blueprint = Blueprint('health', __name__, url_prefix=url_prefix)
+blueprint = Blueprint('chatbot', __name__, url_prefix=url_prefix)
 
-@blueprint.route('/conversation/<int:conversation_id>', methods=['POST'])
+@blueprint.route('/conversation/<uuid:conversation_id>', methods=['POST'])
 def message(conversation_id):
     request_json = request.json
     if 'text' not in request_json:
