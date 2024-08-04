@@ -13,7 +13,7 @@ def _to_dynamodb_message(dto: MessageDTO, expires_at: datetime = None) -> dict:
     item = {
         'ConversationID': dto.conversation_id,
         'CreatedAt': int(dto.created_at.timestamp()),
-        'Role': dto.role.value,
+        'Type': dto.role.value,
         'Text': dto.text,
     }
     if expires_at:
@@ -24,7 +24,7 @@ def _from_dynamodb_message(item: dict) -> MessageDTO:
     return MessageDTO(
         conversation_id=item['ConversationID']['S'],
         created_at=datetime.fromtimestamp(int(item['CreatedAt']['N'])),
-        role=MessageRole(item['Role']['S']),
+        role=MessageRole(item['Type']['S']),
         text=item['Text']['S'],
     )
 
@@ -49,7 +49,7 @@ class MessagesDAO(BaseDAO):
                         },
                     ],
                     'ConsistentRead': True,
-                    'ProjectionExpression': 'ConversationID, CreatedAt, Role, Text',
+                    'ProjectionExpression': 'ConversationID, CreatedAt, Type, Text',
                 }
             },
             ReturnConsumedCapacity='NONE'
