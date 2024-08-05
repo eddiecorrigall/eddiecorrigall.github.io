@@ -1,7 +1,6 @@
 import boto3
 
 from datetime import datetime, timedelta
-from boto3.dynamodb.conditions import Key
 from typing import List
 
 from dto.messages import MessageDTO, MessageRole
@@ -44,7 +43,10 @@ class MessagesDAO(BaseDAO):
             TableName=self.table_name,
             Limit=10,
             ConsistentRead=True,
-            KeyConditionExpression=Key("ConversationID").eq(conversation_id),
+            KeyConditionExpression='ConversationID := id',
+            ExpressionAttributeValues={
+                ':id': {'S': conversation_id},
+            },
         )
         items = response['Items']
         return [_from_dynamodb_message(item) for item in items]
