@@ -1,7 +1,8 @@
 import boto3
 
-from typing import List
 from datetime import datetime, timedelta
+from boto3.dynamodb.conditions import Key
+from typing import List
 
 from dto.messages import MessageDTO, MessageRole
 from dao.common import BaseDAO
@@ -39,21 +40,11 @@ class MessagesDAO(BaseDAO):
         _table.put_item(Item=_to_dynamodb_message(dto, expires_at=expires_at))
 
     def find_all(self, conversation_id: str) -> List[MessageDTO]:
-        response = dynamodb.batch_get_item(
-            RequestItems={
-                self.table_name: {
-                    'Keys': [
-                        {
-                            'ConversationID': {
-                                'S': conversation_id,
-                            },
-                        },
-                    ],
-                    'ConsistentRead': True,
-                    'ProjectionExpression': 'ConversationID, CreatedAt, MessageRole, MessageText',
-                }
-            },
-            ReturnConsumedCapacity='NONE'
+        response = dynamodb.query(
+            TableName=self.table_name,
+            Limit=10,
+            ConsistentRead=True,
+            KeyConditionExpression=Key("ConversationID").eq(conversation_id),
         )
-        items = response['Responses'][self.table_name]
+        items = response['Items']
         return [_from_dynamodb_message(item) for item in items]
