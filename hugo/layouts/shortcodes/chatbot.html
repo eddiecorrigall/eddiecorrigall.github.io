@@ -1,14 +1,17 @@
 API: <code>{{ .Get "api" }}</code>
-<br />
 
-Request a song list:
+<hr />
+
+<p>Request a song list:</p>
+<div id="searchbox">
 <input type="text" id="chatbot_user_message" placeholder="type here and press enter"></textarea>
-<button id="chatbot_submit" type="button">Submit</button>
-<br />
+<button id="chatbot_submit" type="button" class="button">Submit</button>
+</div>
 
 <p>Assistant response:</p>
-<textarea id="chatbot_assistant_message" cols="100" rows="1000"></textarea>
-<br />
+<div id="searchResults">
+    <textarea id="chatbot_assistant_message" cols="100" rows="1000"></textarea>
+</div>
 
 <script>
     const API_URL = 'https://uz0k9wxh33.execute-api.ca-central-1.amazonaws.com/live';
@@ -16,6 +19,39 @@ Request a song list:
     const userMessageTextInput = document.getElementById('chatbot_user_message');
     const submitButton = document.getElementById('chatbot_submit');
     const assistantMessageTextInput = document.getElementById('chatbot_assistant_message');
+
+    const setCookie = (name, value) => {
+        document.cookie = `${name}=${value}`;
+    };
+
+    function getCookie(name) {
+        // https://www.w3schools.com/js/js_cookies.asp
+        const start = name + '=';
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            const c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(start) == 0) {
+                return c.substring(start.length, c.length);
+            }
+        }
+        return undefined;
+    }
+
+    const getConversationID = () => {
+        const name = 'conversationId';
+        let id = getCookie(name);
+        if (id === undefined) {
+            id = crypto.randomUUID();
+            setCookie(name, id);
+        }
+        return id;
+    }
+
+    const conversationId = getConversationID();
 
     const handleAssistantMessage = (assistantMessage) => {
         console.log(`Assistant message: ${assistantMessage}`);
@@ -43,7 +79,6 @@ Request a song list:
                 handleAssistantMessage('Something went wrong...');
             }
         }
-        const conversationId = '123'; // TODO
         const isAsynchronous = true;
         xmlHttp.open('POST', `${API_URL}/chatbot/conversation/${conversationId}`, isAsynchronous);
         xmlHttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
