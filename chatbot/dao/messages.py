@@ -45,7 +45,7 @@ class MessagesDAO(BaseDAO):
                     'Keys': [
                         {
                             'ConversationID': {
-                                'N': conversation_id,
+                                'S': conversation_id,
                             },
                         },
                     ],
