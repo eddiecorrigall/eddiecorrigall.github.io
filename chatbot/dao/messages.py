@@ -43,7 +43,7 @@ class MessagesDAO(BaseDAO):
             TableName=self.table_name,
             Limit=10,
             ConsistentRead=True,
-            KeyConditionExpression='ConversationID := id',
+            KeyConditionExpression='ConversationID = :id',
             ExpressionAttributeValues={
                 ':id': {'S': conversation_id},
             },
