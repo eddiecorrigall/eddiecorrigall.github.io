@@ -10,11 +10,12 @@ from dao.common import BaseDAO
 dynamodb = boto3.client(service_name='dynamodb')
 
 def _to_dynamodb_message(dto: MessageDTO, expires_at: datetime = None) -> dict:
+    # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html
     item = {
         'ConversationID': dto.conversation_id,
         'CreatedAt': int(dto.created_at.timestamp()),
-        'Type': dto.role.value,
-        'Text': dto.text,
+        'MessageRole': dto.role.value,
+        'MessageText': dto.text,
     }
     if expires_at:
         item['ExpiresAt'] = int(expires_at.timestamp())
@@ -24,8 +25,8 @@ def _from_dynamodb_message(item: dict) -> MessageDTO:
     return MessageDTO(
         conversation_id=item['ConversationID']['S'],
         created_at=datetime.fromtimestamp(int(item['CreatedAt']['N'])),
-        role=MessageRole(item['Type']['S']),
-        text=item['Text']['S'],
+        role=MessageRole(item['MessageRole']['S']),
+        text=item['MessageText']['S'],
     )
 
 class MessagesDAO(BaseDAO):
@@ -49,7 +50,7 @@ class MessagesDAO(BaseDAO):
                         },
                     ],
                     'ConsistentRead': True,
-                    'ProjectionExpression': 'ConversationID, CreatedAt, Type, Text',
+                    'ProjectionExpression': 'ConversationID, CreatedAt, MessageRole, MessageText',
                 }
             },
             ReturnConsumedCapacity='NONE'
