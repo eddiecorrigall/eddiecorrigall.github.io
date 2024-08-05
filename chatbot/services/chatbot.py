@@ -17,7 +17,7 @@ SYSTEM_MESSAGE = '''
 
 def _to_bedrock_message(dto: MessageDTO) -> dict:
     return {
-        'role': dto.role,
+        'role': dto.role.value,
         'content': [{'text': dto.text}]
     }
 
