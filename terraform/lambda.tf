@@ -87,6 +87,7 @@ resource "aws_lambda_function" "chatbot" {
 
   handler       = "lambda.lambda_handler"
   runtime       = "python3.11"
+  timeout       = 15  # seconds
 
   role = aws_iam_role.lambda_exec_role.arn
 
