@@ -35,9 +35,9 @@ def _from_dynamodb_message(item: dict) -> MessageDTO:
         text=item['MessageText']['S'],
         documents=[
             DocumentDTO(
-                name=document_item['M']['name'],
-                format=DocumentFormat(document_item['M']['format']),
-                url=document_item['M']['url'],
+                name=document_item['M']['name']['S'],
+                format=DocumentFormat(document_item['M']['format']['S']),
+                url=document_item['M']['url']['S'],
             )
             for document_item in item['MessageDocuments']['L']
         ],
