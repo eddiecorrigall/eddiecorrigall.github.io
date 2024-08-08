@@ -1,11 +1,11 @@
 import os
 
-from datetime import datetime
 from flask import Blueprint, abort, jsonify, g, request
 from uuid import UUID
 
 from dto.document import DocumentDTO, DocumentFormat
-from dao.messages import MessagesDAO, message_to_dict
+from dao.messages import MessagesDAO
+from dto.messages import message_to_dict
 from services.chatbot import chatbot_send_message
 
 
