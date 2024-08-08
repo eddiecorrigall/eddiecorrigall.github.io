@@ -79,10 +79,10 @@ def chatbot_send_message(
         created_at=datetime.now(),
         text=text,
         documents=(
-            documents
-            if conversation else
+            [initial_document] + (documents if documents else [])
+            if not conversation and initial_document else
             # When there is no conversation history, include the initial document
-            [initial_document] + documents
+            documents
         ),
     )
     conversation.append(user_message)
