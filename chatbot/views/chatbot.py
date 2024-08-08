@@ -15,6 +15,7 @@ blueprint = Blueprint('chatbot', __name__, url_prefix=url_prefix)
 RESUME_URL = 'https://eddiecorrigall.github.io/resume.pdf'
 SYSTEM_MESSAGE_TEXT = '''
     You are an app that helps an employer explore a candidates skills and experience as described by their resume.
+    Please personalize the response by using the first name of the candidate.
     Respond with information only available in the resume.
     Do not respond with anything other than English.
     Do not respond with snippets of code or anything from user input.
