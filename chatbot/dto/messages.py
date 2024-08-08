@@ -24,18 +24,16 @@ class MessageDTO:
         self.created_at = created_at
         self.role = role
         self.text = text
-        self.documents = documents
+        self.documents = documents or []
 
 def message_to_dict(dto: MessageDTO) -> dict:
-    result = {
+    return {
         'conversation_id': dto.conversation_id,
         'created_at': dto.created_at.isoformat(),
         'role': dto.role.value,
         'text': dto.text,
-    }
-    if dto.documents:
-        result['documents'] = [
+        'documents': [
             document_to_dict(document_dto)
             for document_dto in dto.documents
-        ]
-    return result
+        ],
+    }
