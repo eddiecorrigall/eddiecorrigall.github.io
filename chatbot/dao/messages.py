@@ -33,14 +33,18 @@ def _from_dynamodb_message(item: dict) -> MessageDTO:
         created_at=datetime.fromtimestamp(int(item['CreatedAt']['N'])),
         role=MessageRole(item['MessageRole']['S']),
         text=item['MessageText']['S'],
-        documents=[
-            DocumentDTO(
-                name=document_item['M']['name']['S'],
-                format=DocumentFormat(document_item['M']['format']['S']),
-                url=document_item['M']['url']['S'],
-            )
-            for document_item in item['MessageDocuments']['L']
-        ],
+        documents=(
+            [
+                DocumentDTO(
+                    name=document_item['M']['name']['S'],
+                    format=DocumentFormat(document_item['M']['format']['S']),
+                    url=document_item['M']['url']['S'],
+                )
+                for document_item in item['MessageDocuments']['L']
+            ]
+            if 'MessageDocuments' in item else
+            None
+        ),
     )
 
 class MessagesDAO(BaseDAO):
