@@ -1,10 +1,6 @@
-API: <code>{{ .Get "api" }}</code>
-
-<hr />
-
-<p>Request a song list:</p>
+<p>{{ .Get "description" }}</p>
 <div id="searchbox">
-<input type="text" id="chatbot_user_message" placeholder="type here and press enter"></textarea>
+<input type="text" id="chatbot_user_message" placeholder="{{ .Get "example" }}">
 <button id="chatbot_submit" type="button" class="button">Submit</button>
 </div>
 
@@ -14,7 +10,7 @@ API: <code>{{ .Get "api" }}</code>
 </div>
 
 <script>
-    const API_URL = 'https://uz0k9wxh33.execute-api.ca-central-1.amazonaws.com/live';
+    const API_URL = '{{ .Get "api" }}';
 
     const userMessageTextInput = document.getElementById('chatbot_user_message');
     const submitButton = document.getElementById('chatbot_submit');
