@@ -1,10 +1,10 @@
 import boto3
-import json
 import requests
 
 from datetime import datetime
 from typing import List
 
+from common import safe_serialize
 from dto.document import DocumentDTO
 from dao.messages import MessagesDAO
 from dto.messages import MessageDTO, MessageRole
@@ -44,7 +44,7 @@ def chatbot_query(
 
     # Convert to bedrock conversation...    
     bedrock_conversation = [_to_bedrock_message(dto) for dto in conversation]
-    print('DEBUG - bedrock_conversation: ' + json.dumps(bedrock_conversation))
+    print('DEBUG - bedrock_conversation: ' + safe_serialize(bedrock_conversation))
     # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
     response = bedrock.converse(
         # modelId='meta.llama3-1-405b-instruct-v1:0',
