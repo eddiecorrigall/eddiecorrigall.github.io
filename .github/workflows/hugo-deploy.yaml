@@ -7,6 +7,8 @@ on:
   push:
     branches: [master]
     paths:
+      - .github/workflows/**
+      - frontend/**
       - hugo/**
   workflow_dispatch:
 
