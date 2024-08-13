@@ -57,20 +57,20 @@ resource "aws_iam_role_policy_attachment" "basic" {
 resource "null_resource" "lambda_requirements" {
   # https://docs.aws.amazon.com/lambda/latest/dg/python-package.html#python-package-dependencies
   triggers = {
-    # requirements = filesha1("${path.module}/../chatbot/requirements.txt")
+    # requirements = filesha1("${path.module}/../api/requirements.txt")
     always = "${timestamp()}"
   }
   provisioner "local-exec" {
     command = <<EOT
-      cd ${path.module}/../chatbot/
-      pip3 install -r ${path.module}/../chatbot/requirements.txt -t .
+      cd ${path.module}/../api/
+      pip3 install -r ${path.module}/../api/requirements.txt -t .
     EOT
   }
 }
 
 data "archive_file" "lambda_chatbot_artifact" {
   type        = "zip"
-  source_dir  = "${path.module}/../chatbot"
+  source_dir  = "${path.module}/../api"
   output_path = "${path.module}/artifacts/lambda_function_payload.zip"
   excludes    = [
     "venv"

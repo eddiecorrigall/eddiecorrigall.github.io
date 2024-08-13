@@ -6,7 +6,7 @@ on:
     paths:
       - .github/workflows/terraform-provision.yaml
       - terraform/**
-      - chatbot/**
+      - api/**
 
 permissions:
   contents: read  # checkout
