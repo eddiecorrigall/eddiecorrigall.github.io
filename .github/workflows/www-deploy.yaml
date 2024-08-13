@@ -2,13 +2,13 @@
 # https://github.com/actions/deploy-pages#usage
 # https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
 
-name: 'Hugo: Deploy to GitHub Pages'
+name: 'WWW: Deploy to GitHub Pages'
 on:
   push:
     branches: [master]
     paths:
       - .github/workflows/hugo-deploy.yaml
-      - frontend/**
+      - js/**
       - hugo/**
   workflow_dispatch:
 
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ./js
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: './frontend/package-lock.json'
+          cache-dependency-path: './js/package-lock.json'
       - name: Audit dependencies
         run: npm audit --audit-level info
       - name: Install dependencies
@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: js
-          path: frontend/dist
+          path: js/dist
           if-no-files-found: error
           retention-days: 3
 
