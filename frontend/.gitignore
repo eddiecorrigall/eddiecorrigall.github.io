@@ -1,0 +1,6 @@
+# TypeScript output
+*.tsbuildinfo
+dist
+
+# JavaScript dependencies
+node_modules
