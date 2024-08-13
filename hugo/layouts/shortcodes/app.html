@@ -3,7 +3,7 @@
 <script>
     window.addEventListener('load', () => {
         MyApps.chatbot({
-            api: '{{ $.Site.Params.api_url }}',
+            api: '{{ $.Site.Params.api }}',
             selector: '#' + '{{ .Get "id" }}',
         });
     });

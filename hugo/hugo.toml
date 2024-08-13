@@ -23,7 +23,7 @@ summaryLength = 20
 [params]
   env = 'production'
 
-  api_url = 'https://uz0k9wxh33.execute-api.ca-central-1.amazonaws.com/live'
+  api = 'https://uz0k9wxh33.execute-api.ca-central-1.amazonaws.com/live'
 
   # ShowReadingTime = true
   # ShowShareButtons = true
