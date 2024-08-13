@@ -1,0 +1,10 @@
+<script type="module" src="/js/bundle.js"></script>
+<div id="{{ .Get "id" }}"></div>
+<script>
+    window.addEventListener('load', () => {
+        MyApps.chatbot({
+            api: '{{ $.Site.Params.api_url }}',
+            selector: '#' + '{{ .Get "id" }}',
+        });
+    });
+</script>

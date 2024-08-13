@@ -1,4 +1,7 @@
 public
 resources
 
+# Symlink to js project
+static/js
+
 .hugo_build.lock
