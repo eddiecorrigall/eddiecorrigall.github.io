@@ -69,6 +69,12 @@ jobs:
           # WebP format for image compression and Sass to CSS
           extended: true
 
+      - name: Download js artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: js
+          path: ./hugo/static/js
+
       - name: Build static website
         run: hugo --minify
 
