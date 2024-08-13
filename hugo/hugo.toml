@@ -33,8 +33,9 @@ summaryLength = 20
   UseHugoToc = true
 
   [params.homeInfoParams]
-    Title = "Hi there 👋"
+    Title = 'Hey 👋'
     Content = 'Welcome to my personal website.'
+    AlignSocialIconsTo = 'left'
 
   [[params.socialIcons]]
     name = 'github'
