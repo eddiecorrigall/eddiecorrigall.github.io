@@ -38,6 +38,8 @@ jobs:
         run: npm audit --audit-level info
       - name: Install dependencies
         run: npm clean-install
+      - name: Build artifact
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
