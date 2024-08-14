@@ -17,11 +17,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-js:
+  build-app:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./js
+        working-directory: ./app
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: './js/package-lock.json'
+          cache-dependency-path: './app/package-lock.json'
       - name: Audit dependencies
         run: npm audit --audit-level info
       - name: Install dependencies
@@ -43,13 +43,13 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: js
-          path: js/dist
+          name: app
+          path: app/dist
           if-no-files-found: error
           retention-days: 3
 
   build-www:
-    needs: build-js
+    needs: build-app
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -69,10 +69,10 @@ jobs:
           # WebP format for image compression and Sass to CSS
           extended: true
 
-      - name: Download js artifact
+      - name: Download app artifact
         uses: actions/download-artifact@v4
         with:
-          name: js
+          name: app
           path: ./hugo/static/js
 
       - name: Build static website
