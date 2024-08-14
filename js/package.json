@@ -13,9 +13,11 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "css-loader": "^7.1.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",
     "vue": "^3.4.37",
+    "vue-loader": "^17.4.2",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4"
   }
