@@ -8,7 +8,7 @@ on:
     branches: [master]
     paths:
       - .github/workflows/hugo-deploy.yaml
-      - js/**
+      - app/**
       - hugo/**
   workflow_dispatch:
 
