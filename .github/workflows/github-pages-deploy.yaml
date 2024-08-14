@@ -7,7 +7,7 @@ on:
   push:
     branches: [master]
     paths:
-      - .github/workflows/hugo-deploy.yaml
+      - .github/workflows/github-pages-deploy.yaml
       - app/**
       - hugo/**
   workflow_dispatch:
