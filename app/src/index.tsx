@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import ChatBot from './components/ChatBot';
+import Chat from './components/Chat';
 
 const ChatBotApp = () => {
   useEffect(() => {
     console.log('ChatBot rendered');
   });
 
-  return <ChatBot
+  return <Chat
     messagePlaceholder='Write a message to the assistant'
     submitLabel='Submit'
   />

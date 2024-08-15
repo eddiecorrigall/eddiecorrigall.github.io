@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react'
-import SearchBar from './SearchBar'
-import * as styles from './ChatBot.module.css'
+import SubmitText from './SubmitText'
+import * as styles from './Chat.module.css'
 
 interface DocumentDTO {
 }
@@ -13,7 +13,7 @@ interface MessageDTO {
   documents?: DocumentDTO[],
 }
 
-const ChatBot = (props: {
+const Chat = (props: {
   messagePlaceholder: string,
   submitLabel: string,
 }) => {
@@ -54,7 +54,7 @@ const ChatBot = (props: {
       : classNames.assistant
   }
   return <div className={(styles as any).container}>
-    <SearchBar
+    <SubmitText
       onSubmit={handleSubmit}
       onChange={handleUserMessageChange}
       value={userMessage}
@@ -74,4 +74,4 @@ const ChatBot = (props: {
   </div>
 };
 
-export default ChatBot
+export default Chat

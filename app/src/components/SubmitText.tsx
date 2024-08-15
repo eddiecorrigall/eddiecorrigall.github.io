@@ -1,7 +1,7 @@
 import React, { FormEventHandler } from 'react'
-import * as styles from './SearchBar.module.css'
+import * as styles from './SubmitText.module.css'
 
-function SearchBar(props: {
+function SubmitText(props: {
   onSubmit: FormEventHandler<HTMLFormElement>,
   onChange: React.ChangeEventHandler<HTMLInputElement>,
   value?: string,
@@ -27,4 +27,4 @@ function SearchBar(props: {
   </div>
 }
 
-export default SearchBar
+export default SubmitText
