@@ -1,0 +1,33 @@
+/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+
+.container {
+  width: 100%;
+}
+
+.search form {
+  width: 100%;
+  display: flex;
+}
+
+.search form input {
+  padding: 20px;
+  outline: none;
+
+  border-width: 2px;
+  border-right: none;
+
+  flex: 10;
+}
+
+.search form input:focus {
+  color: black;
+}
+
+.search form button {
+  padding: 10px;
+  cursor: pointer;
+  border-width: 2px;
+  border-radius: 0 5px 20px 0;
+
+  flex: 1;
+}

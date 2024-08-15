@@ -1,0 +1,83 @@
+/* References:
+ * - https://stackoverflow.com/questions/71154905/css-for-chat-room-speech-bubble-position
+ */
+
+.container {
+  width: 100%;
+}
+
+.messages {
+  --rad: 20px;
+  --rad-sm: 3px;
+  font: 16px/1.5 sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.messages p.message {
+  position: relative;
+  max-width: 75%;
+  padding: 7px 15px;
+  margin-bottom: 2px;
+}
+
+.messages p.user {
+  border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
+  background: #42a5f5;
+  color: #fff;
+  /* Move bubble container closer to user side */
+  margin-left: auto;
+}
+
+.messages p.assistant {
+  border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+  background: #f1f1f1;
+  color: #555;
+  /* Move bubble container closer to assistant side */
+  margin-right: auto;
+}
+
+/* Round the right corner of the first user message */
+
+.messages p.user:first-child,
+.message.assistant + .message.user {
+  border-top-right-radius: var(--rad);
+}
+
+/* Round the left corner of the first assistant message */
+
+.messages p.user:first-child,
+.message.user + .message.assistant {
+  border-top-left-radius: var(--rad);
+}
+
+/* Show time */
+
+.messages p.message::before {
+  content: attr(data-time);
+  font-size: 0.8rem;
+  color: #888;
+  white-space: nowrap;
+  /* Force time above bubble */
+  position: absolute;
+  bottom: 100%;
+  /* Hide by default */
+  display: none;
+}
+
+.messages p.user::before {
+  right: 15px;
+}
+
+.messages p.assistant::before {
+  left: 15px;
+}
+
+/* Show time only for first message in group */
+
+p.message:first-child::before,
+p.message.user + p.message.assistant::before,
+p.message.assistant + p.message.user::before {
+  display: block;
+}

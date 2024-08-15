@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
+import ChatBot from './components/ChatBot';
 
-const ChatBotApp: React.FC = () => {
+const ChatBotApp = () => {
   useEffect(() => {
-    console.log('rendered');
+    console.log('ChatBot rendered');
   });
 
-  return <p>Hello world!</p>
+  return <ChatBot
+    messagePlaceholder='Write a message to the assistant'
+    submitLabel='Submit'
+  />
 }
 
 const APPS = {
@@ -14,7 +18,11 @@ const APPS = {
     const { id, api } = options;
     const container = document.getElementById(id);
     const root = createRoot(container!);
-    root.render(<ChatBotApp />);
+    root.render(
+      <div style={{ 'width': '500px' }}>
+        <ChatBotApp />
+      </div>
+    )
   },
 };
 
