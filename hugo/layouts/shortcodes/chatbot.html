@@ -9,14 +9,6 @@
     <textarea id="chatbot_assistant_message" cols="100" rows="1000"></textarea>
 </div>
 
-<div id="app"></div>
-
-<script type="module" src="/js/bundle.js"></script>
-<script>
-    window.addEventListener('load', () => {
-        MyApps.chatbot('#app')
-    });
-</script>
 <script>
     const API_URL = '{{ .Get "api" }}';
 
