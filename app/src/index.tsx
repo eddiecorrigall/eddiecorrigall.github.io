@@ -79,7 +79,7 @@ const APPS = {
     const container = document.getElementById(id);
     const root = createRoot(container!);
     root.render(
-      <div style={{ 'width': '500px' }}>
+      <div style={{ 'width': '100%' }}>
         <ChatBotApp api={api} />
       </div>
     )
