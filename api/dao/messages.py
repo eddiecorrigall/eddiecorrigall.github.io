@@ -3,6 +3,7 @@ import boto3
 from datetime import datetime, timedelta
 from typing import List
 
+from api.dao.errors import NotFoundError, TooManyRequestsError
 from dto.document import DocumentDTO, DocumentFormat, document_to_dict
 from dto.messages import MessageDTO, MessageRole
 from dao.common import BaseDAO
@@ -54,17 +55,32 @@ class MessagesDAO(BaseDAO):
     def insert(self, dto: MessageDTO):
         expires_at = dto.created_at + timedelta(minutes=20)
         _table = self._get_table()
-        _table.put_item(Item=_to_dynamodb_message(dto, expires_at=expires_at))
+        try:
+            # TODO: ConditionExpression to prevent replacement
+            _table.put_item(
+                Item=_to_dynamodb_message(dto, expires_at=expires_at),
+            )
+        except dynamodb.exceptions.ProvisionedThroughputExceededException | dynamodb.exceptions.RequestLimitExceeded as e:
+            print(e)
+            raise TooManyRequestsError()
+
 
     def find_all(self, conversation_id: str) -> List[MessageDTO]:
-        response = dynamodb.query(
-            TableName=self.table_name,
-            Limit=10,
-            ConsistentRead=True,
-            KeyConditionExpression='ConversationID = :id',
-            ExpressionAttributeValues={
-                ':id': {'S': conversation_id},
-            },
-        )
+        try:
+            response = dynamodb.query(
+                TableName=self.table_name,
+                Limit=10,
+                ConsistentRead=True,
+                KeyConditionExpression='ConversationID = :id',
+                ExpressionAttributeValues={
+                    ':id': {'S': conversation_id},
+                },
+            )
+        except dynamodb.exceptions.ResourceNotFoundException as e:
+            print(e)
+            raise NotFoundError()
+        except dynamodb.exceptions.ProvisionedThroughputExceededException | dynamodb.exceptions.RequestLimitExceeded as e:
+            print(e)
+            raise TooManyRequestsError()
         items = response['Items']
         return [_from_dynamodb_message(item) for item in items]

@@ -4,6 +4,8 @@ import requests
 from datetime import datetime
 from typing import List
 
+from api.dao import errors as dao_errors
+from api.services import errors as service_errors
 from common import safe_serialize
 from dto.document import DocumentDTO
 from dao.messages import MessagesDAO
@@ -45,24 +47,39 @@ def chatbot_query(
     # Convert to bedrock conversation...    
     bedrock_conversation = [_to_bedrock_message(dto) for dto in conversation]
     print('DEBUG - bedrock_conversation: ' + safe_serialize(bedrock_conversation))
-    # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
-    response = bedrock.converse(
-        # modelId='meta.llama3-1-405b-instruct-v1:0',
-        modelId='meta.llama3-70b-instruct-v1:0',
-        # modelId='meta.llama3-8b-instruct-v1:0',
-        system=[
-            {'text': system_message_text},
-        ],
-        messages=bedrock_conversation,
-        inferenceConfig={
-            # https://docs.aws.amazon.com/bedrock/latest/userguide/general-guidelines-for-bedrock-users.html
-            'maxTokens': 512,
-            'temperature': 0.5,  # the creativity of the response
-            'topP': 0.9,  # stability of response
-        },
-    )
-    response_text = response['output']['message']['content'][0]['text']
-    return response_text
+    try:
+        # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
+        response = bedrock.converse(
+            # modelId='meta.llama3-1-405b-instruct-v1:0',
+            modelId='meta.llama3-70b-instruct-v1:0',
+            # modelId='meta.llama3-8b-instruct-v1:0',
+            system=[
+                {'text': system_message_text},
+            ],
+            messages=bedrock_conversation,
+            inferenceConfig={
+                # https://docs.aws.amazon.com/bedrock/latest/userguide/general-guidelines-for-bedrock-users.html
+                'maxTokens': 512,
+                'temperature': 0.5,  # the creativity of the response
+                'topP': 0.9,  # stability of response
+            },
+        )
+        response_text = response['output']['message']['content'][0]['text']
+        return response_text
+    except bedrock.exceptions.ThrottlingException as e:
+        print(e)
+        raise service_errors.TooManyRequestsError()
+
+def chatbot_get_messages(
+    dao: MessagesDAO,
+    conversation_id: str,
+) -> List[MessageDTO]:
+    try:
+        return dao.find_all(conversation_id=conversation_id)
+    except dao_errors.NotFoundError:
+        return []
+    except dao_errors.TooManyRequestsError:
+        raise service_errors.TooManyRequestsError()
 
 def chatbot_send_message(
     dao: MessagesDAO,
@@ -72,7 +89,7 @@ def chatbot_send_message(
     documents: List[DocumentDTO] = None,
     initial_document: DocumentDTO = None,
 ) -> MessageDTO:
-    conversation = dao.find_all(conversation_id=conversation_id)
+    conversation = chatbot_get_messages(dao=dao, conversation_id=conversation_id)
     user_message = MessageDTO(
         conversation_id=conversation_id,
         role=MessageRole.USER,
@@ -100,7 +117,10 @@ def chatbot_send_message(
         created_at=datetime.now(),
         text=chatbot_response,
     )
-    # TODO: batch insert messages
-    dao.insert(user_message)
-    dao.insert(assistant_message)
+    try:
+        # TODO: batch insert messages
+        dao.insert(user_message)
+        dao.insert(assistant_message)
+    except dao_errors.TooManyRequestsError:
+        raise service_errors.TooManyRequestsError()
     return assistant_message

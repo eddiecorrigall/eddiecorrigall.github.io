@@ -3,10 +3,11 @@ import os
 from flask import Blueprint, abort, jsonify, g, request
 from uuid import UUID
 
+from api.dao.errors import TooManyRequestsError
 from dto.document import DocumentDTO, DocumentFormat
 from dao.messages import MessagesDAO
 from dto.messages import message_to_dict
-from services.chatbot import chatbot_send_message
+from services.chatbot import chatbot_get_messages, chatbot_send_message
 
 
 url_prefix = os.getenv('URL_PREFIX')
@@ -27,23 +28,29 @@ def get_messages_dao():
     return g.messages_dao
 
 @blueprint.route('/conversation/<uuid:conversation_id>', methods=['POST'])
-def message(conversation_id: UUID):
+def send_message(conversation_id: UUID):
     request_json = request.json
     if 'text' not in request_json:
         return abort(400, 'JSON body missing text')
     user_message_text = request_json['text']
     if not user_message_text:
         return abort(400, 'JSON body text is empty')
-    assistant_message = chatbot_send_message(
-        dao=get_messages_dao(),
-        system_message_text=SYSTEM_MESSAGE_TEXT,
-        conversation_id=str(conversation_id),
-        text=user_message_text,
-        initial_document=DocumentDTO(
-            name='Resume',
-            format=DocumentFormat.PDF,
-            url=RESUME_URL,
+    try:
+        assistant_message = chatbot_send_message(
+            dao=get_messages_dao(),
+            system_message_text=SYSTEM_MESSAGE_TEXT,
+            conversation_id=str(conversation_id),
+            text=user_message_text,
+            initial_document=DocumentDTO(
+                name='Resume',
+                format=DocumentFormat.PDF,
+                url=RESUME_URL,
+            )
         )
-    )
+    except TooManyRequestsError:
+        return abort(429)
+    except Exception as e:
+        print(e)
+        return abort(500)
     # Provide a new user message, get a response from the model
     return jsonify(message_to_dict(assistant_message)), 201
