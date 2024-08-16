@@ -4,12 +4,12 @@ import requests
 from datetime import datetime
 from typing import List
 
-from api.dao import errors as dao_errors
-from api.services import errors as service_errors
+from dao import errors as dao_errors
 from common import safe_serialize
 from dto.document import DocumentDTO
 from dao.messages import MessagesDAO
 from dto.messages import MessageDTO, MessageRole
+from services import errors as service_errors
 
 
 bedrock = boto3.client(service_name='bedrock-runtime')

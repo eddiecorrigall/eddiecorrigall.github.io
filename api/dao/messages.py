@@ -3,8 +3,8 @@ import boto3
 from datetime import datetime, timedelta
 from typing import List
 
-from api.dao.errors import NotFoundError, TooManyRequestsError
 from dto.document import DocumentDTO, DocumentFormat, document_to_dict
+from dao.errors import NotFoundError, TooManyRequestsError
 from dto.messages import MessageDTO, MessageRole
 from dao.common import BaseDAO
 

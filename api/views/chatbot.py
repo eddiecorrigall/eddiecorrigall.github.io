@@ -3,8 +3,8 @@ import os
 from flask import Blueprint, abort, jsonify, g, request
 from uuid import UUID
 
-from api.dao.errors import TooManyRequestsError
 from dto.document import DocumentDTO, DocumentFormat
+from dao.errors import TooManyRequestsError
 from dao.messages import MessagesDAO
 from dto.messages import message_to_dict
 from services.chatbot import chatbot_get_messages, chatbot_send_message
