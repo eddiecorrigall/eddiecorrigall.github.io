@@ -44,7 +44,8 @@ def chatbot_query(
     # https://aws.amazon.com/blogs/aws/announcing-llama-3-1-405b-70b-and-8b-models-from-meta-in-amazon-bedrock/
     # https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
 
-    # Convert to bedrock conversation...    
+    # Convert to bedrock conversation...
+    conversation = sorted(conversation, lambda message: message.created_at)
     bedrock_conversation = [_to_bedrock_message(dto) for dto in conversation]
     print('DEBUG - bedrock_conversation: ' + safe_serialize(bedrock_conversation))
     try:
