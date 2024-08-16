@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import Chat from './components/Chat';
 import { MessageDTO, MessageRole } from './dto/MessageDTO';
 import { getCookie, setCookie } from './cookies';
-import { sendMessage } from './dao/chatbot';
+import { listMessages, sendMessage } from './dao/chatbot';
 
 const getConversationID = () => {
   const name = 'conversationId';
@@ -18,13 +18,16 @@ const getConversationID = () => {
 const ChatBotApp = (props: { api: string }) => {
   const conversationId = getConversationID();
   const [userMessageText, setUserMessageText] = useState<string>('')
-  const [messages, setMessages] = useState<MessageDTO[]>([
-    /*
-    { conversation_id, created_at: new Date(), role: 'user', text: 'Eddie' },
-    { conversation_id, created_at: new Date(), role: 'assistant', text: 'New phone, who dis?' },
-    { conversation_id, created_at: new Date(), role: 'user', text: 'Hello!' },
-    */
-  ])
+  const [messages, setMessages] = useState<MessageDTO[]>([])
+
+  useEffect(() => {
+    listMessages({
+      api: props.api,
+      conversationId,
+    })
+      .then(setMessages)
+      .catch((e) => alert(e))
+  }, [])
 
   const appendMessage = (message: MessageDTO) => {
     setMessages((previousMessages) => {
@@ -58,10 +61,6 @@ const ChatBotApp = (props: { api: string }) => {
     const text = event.target.value
     setUserMessageText(text)
   }
-
-  useEffect(() => {
-    console.log('ChatBot rendered');
-  });
 
   return <Chat
     onSubmit={handleSubmit}

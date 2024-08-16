@@ -20,7 +20,7 @@ export const toMessageDTO = (unsafeObject: any): MessageDTO => {
     conversation_id: unsafeObject.conversation_id,
     created_at: new Date(unsafeObject.created_at),
     documents: unsafeObject.documents,
-    role: MessageRole[unsafeObject.role as keyof typeof MessageRole],
+    role: unsafeObject.role === 'user' ? MessageRole.USER : MessageRole.ASSISTANT,
     text: unsafeObject.text.trim(),
   }
 }

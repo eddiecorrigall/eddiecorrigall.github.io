@@ -1,4 +1,4 @@
-import { MessageDTO, MessageRole, toMessageDTO } from '../dto/MessageDTO'
+import { MessageDTO, toMessageDTO } from '../dto/MessageDTO'
 import { STATUS_CODE } from './http';
 
 export const sendMessage = async (
@@ -8,7 +8,7 @@ export const sendMessage = async (
     userMessage: MessageDTO,
   }
 ): Promise<MessageDTO> => {
-  console.log(`User message: ${request.userMessage}`);
+  console.log(`User message: ${request.userMessage}`)
   const response = await fetch(`${request.api}/chatbot/conversation/${request.conversationId}`, {
     method: 'POST',
     headers: {
@@ -19,10 +19,31 @@ export const sendMessage = async (
   if (response.ok) {
     // TODO: validate response body
     const responseJSON = await response.json()
-    return toMessageDTO(responseJSON)
+    const assistantMessage = toMessageDTO(responseJSON)
+    console.log(`Assistant message: ${assistantMessage}`)
+    return assistantMessage
   }
   if (response.status === STATUS_CODE.TooManyRequests) {
-    throw new Error('Too many requests, please try again later.');
+    throw new Error('Too many requests, please try again later.')
   }
-  throw new Error('Something went wrong...');
+  throw new Error('Something went wrong...')
+}
+
+export const listMessages = async (
+  request: {
+    api: string,
+    conversationId: string,
+  },
+): Promise<MessageDTO[]> => {
+  const response = await fetch(`${request.api}/chatbot/conversation/${request.conversationId}`, {
+    method: 'GET',
+  })
+  if (response.ok) {
+    const responseJSON = await response.json()
+    return responseJSON.map(toMessageDTO)
+  }
+  if (response.status === STATUS_CODE.TooManyRequests) {
+    throw new Error('Too many requests, please try again later.')
+  }
+  throw new Error('Something went wrong...')
 }
