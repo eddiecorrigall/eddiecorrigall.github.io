@@ -69,7 +69,8 @@ class MessagesDAO(BaseDAO):
         try:
             response = dynamodb.query(
                 TableName=self.table_name,
-                Limit=10,
+                ScanIndexForward=False,  # Descending sort by CreatedAt (sort/range key)
+                Limit=100,  # Avoid too much history
                 ConsistentRead=True,
                 KeyConditionExpression='ConversationID = :id',
                 ExpressionAttributeValues={

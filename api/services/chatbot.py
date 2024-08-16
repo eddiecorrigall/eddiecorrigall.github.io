@@ -103,10 +103,6 @@ def chatbot_send_message(
         ),
     )
     conversation.append(user_message)
-    conversation = sorted(
-        conversation,
-        key=lambda message: message.created_at,
-    )
     chatbot_response = chatbot_query(
         system_message_text=system_message_text,
         conversation=conversation,
