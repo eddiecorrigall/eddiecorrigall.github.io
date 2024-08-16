@@ -54,3 +54,20 @@ def send_message(conversation_id: UUID):
         return abort(500)
     # Provide a new user message, get a response from the model
     return jsonify(message_to_dict(assistant_message)), 201
+
+@blueprint.route('/conversation/<uuid:conversation_id>', methods=['GET'])
+def list_messages(conversation_id: UUID):
+    try:
+        conversation = chatbot_get_messages(
+            dao=get_messages_dao(),
+            conversation_id=str(conversation_id),
+        )
+    except TooManyRequestsError:
+        return abort(429)
+    except Exception as e:
+        print(e)
+        return abort(500)
+    return jsonify([
+        message_to_dict(message)
+        for message in conversation
+    ])
