@@ -1,11 +1,10 @@
 import boto3
 import requests
 
-from datetime import datetime
 from typing import List
 
 from dao import errors as dao_errors
-from common import safe_serialize
+from common import datetime_now, safe_serialize
 from dto.document import DocumentDTO
 from dao.messages import MessagesDAO
 from dto.messages import MessageDTO, MessageRole
@@ -94,7 +93,7 @@ def chatbot_send_message(
     user_message = MessageDTO(
         conversation_id=conversation_id,
         role=MessageRole.USER,
-        created_at=datetime.now(),
+        created_at=datetime_now(),
         text=text,
         documents=(
             [initial_document] + (documents if documents else [])
@@ -111,7 +110,7 @@ def chatbot_send_message(
     assistant_message = MessageDTO(
         conversation_id=conversation_id,
         role=MessageRole.ASSISTANT,
-        created_at=datetime.now(),
+        created_at=datetime_now(),
         text=chatbot_response,
     )
     try:
