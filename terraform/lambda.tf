@@ -85,7 +85,7 @@ resource "aws_lambda_function" "chatbot" {
   filename         = data.archive_file.lambda_chatbot_artifact.output_path
   source_code_hash = data.archive_file.lambda_chatbot_artifact.output_base64sha256
 
-  handler       = "lambda.lambda_handler"
+  handler       = "api.lambda_handler"
   runtime       = "python3.11"
   timeout       = 15  # seconds
 
