@@ -1,11 +1,17 @@
 +++
-title = 'About'
+title = 'Resume Assistant'
 +++
 
-Hi, I'm Eddie,
+Ask the resume assistant anything about my work experience. [My resume](https://eddiecorrigall.github.io/resume.pdf) will be used to answer your queries.
 
-A Canadian 🇨🇦 software developer living in [Kitchener, Ontario](https://maps.app.goo.gl/94Z5CbSJW5tLtwQK9).
+{{<rawhtml>}}
+  <iframe src="/resume-assistant.html" width="100%" height="500px"></iframe>
+{{</rawhtml>}}
 
-I am interest in a great number of topics, and I like to learn and share.
+This resume assistant project is open source, and available on [GitHub](https://github.com/eddiecorrigall/eddiecorrigall.github.io). I build it using the following technologies.
 
-On my website, I want to write about my interests and understanding on topics such as computer science, home renovation, car maintenance, or what ever else is in my life.
+- **GitHub:** for CICD and source control
+- **Terraform:** to manage AWS infrastructure
+- **API Gateway + AWS Lambda + Python:** for the API
+- **AWS Bedrock:** for LLM
+- **TypeScript + React:** for frontend

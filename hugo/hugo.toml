@@ -92,7 +92,7 @@ summaryLength = 20
     pre = '<i>&commat; </i>'
   [[menus.main]]
     name = 'Resume'
-    pageRef = '/resume'
+    pageRef = '/about'
     weight = 30
     pre = '<i>&quest; </i>'
   [[menus.main]]
