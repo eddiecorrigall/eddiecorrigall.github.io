@@ -1,6 +1,6 @@
 import boto3
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List
 
 from dto.document import DocumentDTO, DocumentFormat, document_to_dict
@@ -31,7 +31,7 @@ def _to_dynamodb_message(dto: MessageDTO, expires_at: datetime = None) -> dict:
 def _from_dynamodb_message(item: dict) -> MessageDTO:
     return MessageDTO(
         conversation_id=item['ConversationID']['S'],
-        created_at=datetime.fromtimestamp(int(item['CreatedAt']['N'])),
+        created_at=datetime.fromtimestamp(int(item['CreatedAt']['N']), tz=timezone.utc),
         role=MessageRole(item['MessageRole']['S']),
         text=item['MessageText']['S'],
         documents=(
