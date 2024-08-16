@@ -3,6 +3,7 @@ import boto3
 from datetime import datetime, timedelta, timezone
 from typing import List
 
+from common import from_timestamp, to_timestamp
 from dto.document import DocumentDTO, DocumentFormat, document_to_dict
 from dao.errors import NotFoundError, TooManyRequestsError
 from dto.messages import MessageDTO, MessageRole
@@ -15,7 +16,7 @@ def _to_dynamodb_message(dto: MessageDTO, expires_at: datetime = None) -> dict:
     # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html
     item = {
         'ConversationID': dto.conversation_id,
-        'CreatedAt': int(dto.created_at.timestamp()),
+        'CreatedAt': to_timestamp(dto.created_at),
         'MessageRole': dto.role.value,
         'MessageText': dto.text,
     }
@@ -25,13 +26,13 @@ def _to_dynamodb_message(dto: MessageDTO, expires_at: datetime = None) -> dict:
             for document_dto in dto.documents
         ]
     if expires_at:
-        item['ExpiresAt'] = int(expires_at.timestamp())
+        item['ExpiresAt'] = to_timestamp(expires_at)
     return item
 
 def _from_dynamodb_message(item: dict) -> MessageDTO:
     return MessageDTO(
         conversation_id=item['ConversationID']['S'],
-        created_at=datetime.fromtimestamp(int(item['CreatedAt']['N']), tz=timezone.utc),
+        created_at=from_timestamp(int(item['CreatedAt']['N'])),
         role=MessageRole(item['MessageRole']['S']),
         text=item['MessageText']['S'],
         documents=(

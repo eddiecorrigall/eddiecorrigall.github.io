@@ -10,3 +10,9 @@ def safe_serialize(obj):
 
 def datetime_now():
     return datetime.now(timezone.utc)
+
+def to_timestamp(dt: datetime) -> int:
+    return int(dt.timestamp())
+
+def from_timestamp(timestamp: int) -> datetime:
+    return datetime.fromtimestamp(timestamp, tz=timezone.utc)
