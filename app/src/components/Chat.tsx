@@ -1,72 +1,43 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react'
+import React, { FormEventHandler, ChangeEventHandler } from 'react'
 import SubmitText from './SubmitText'
-import * as styles from './Chat.module.css'
-
-interface DocumentDTO {
-}
-
-interface MessageDTO {
-  conversation_id: string,
-  created_at: Date,
-  text: string;
-  role: 'user' | 'assistant',
-  documents?: DocumentDTO[],
-}
+import * as css from './Chat.module.css'
+import { MessageDTO } from '../dto/MessageDTO';
 
 const Chat = (props: {
+  onSubmit: FormEventHandler<HTMLFormElement>,
+  userMessageText: string,
+  onUserMessageTextChange: ChangeEventHandler<HTMLInputElement>,
+  messages: MessageDTO[],
   messagePlaceholder: string,
   submitLabel: string,
 }) => {
-  const conversation_id = 'abc123'; // TODO: get this from cookie
-  const [messages, setMessages] = useState<MessageDTO[]>([
-    { conversation_id, created_at: new Date(), role: 'user', text: 'Its Eddie' },
-    { conversation_id, created_at: new Date(), role: 'assistant', text: 'New phone, who dis?' },
-    { conversation_id, created_at: new Date(), role: 'user', text: 'Hello?' },
-    { conversation_id, created_at: new Date(), role: 'user', text: 'Hello!' },
-  ])
-  const [userMessage, setUserMessage] = useState<string>('')
-
-  const handleUserMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const text = event.target.value
-    setUserMessage(text)
-  }
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    const sanitizedUserMessage = userMessage.trim()
-    if (sanitizedUserMessage === '') return
-    const newMessage: MessageDTO = {
-      conversation_id,
-      created_at: new Date(),
-      text: sanitizedUserMessage,
-      role: 'user',
-    }
-    setMessages([newMessage, ...messages]) // append to front
-    // TODO: http request to API
-    setUserMessage('')
-  }
-
-  const classNames = (styles as any);
-  const messageClassName = classNames.message
+  const classNames = css as any;
   const getRoleClassName = (message: MessageDTO) => {
     return message.role === 'user'
       ? classNames.user
       : classNames.assistant
   }
-  return <div className={(styles as any).container}>
+  const messageDataContext = (message: MessageDTO) => {
+    const messenger = message.role === 'user'
+      ? 'You'
+      : 'Assistant'
+    const timeString = message.created_at.toLocaleTimeString()
+    return `${messenger} ${timeString}`
+  }
+  return <div className={classNames.container}>
     <SubmitText
-      onSubmit={handleSubmit}
-      onChange={handleUserMessageChange}
-      value={userMessage}
+      onSubmit={props.onSubmit}
+      onTextChange={props.onUserMessageTextChange}
+      text={props.userMessageText}
       placeholder={props.messagePlaceholder}
       buttonLabel={props.submitLabel}
     />
-    <div className={(styles as any).messages}>
-      {messages.map((message, index) => (
+    <div className={classNames.messages}>
+      {props.messages.map((message, index) => (
         <p
           key={index}
-          data-time={message.created_at.toLocaleTimeString()}
-          className={`${messageClassName} ${getRoleClassName(message)}`}>
+          data-context={messageDataContext(message)}
+          className={`${classNames.message} ${getRoleClassName(message)}`}>
           {message.text}
         </p>
       ))}

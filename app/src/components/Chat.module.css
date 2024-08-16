@@ -55,7 +55,7 @@
 /* Show time */
 
 .messages p.message::before {
-  content: attr(data-time);
+  content: attr(data-context);
   font-size: 0.8rem;
   color: #888;
   white-space: nowrap;
