@@ -8,7 +8,6 @@ export const sendMessage = async (
     userMessage: MessageDTO,
   }
 ): Promise<MessageDTO> => {
-  console.log(`User message: ${request.userMessage}`)
   const response = await fetch(`${request.api}/chatbot/conversation/${request.conversationId}`, {
     method: 'POST',
     headers: {
@@ -20,7 +19,6 @@ export const sendMessage = async (
     // TODO: validate response body
     const responseJSON = await response.json()
     const assistantMessage = toMessageDTO(responseJSON)
-    console.log(`Assistant message: ${assistantMessage}`)
     return assistantMessage
   }
   if (response.status === STATUS_CODE.TooManyRequests) {
